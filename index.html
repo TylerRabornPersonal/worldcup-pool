@@ -166,7 +166,7 @@ function buildHow(){
   const rows=keys.map((k,i)=>{
     const tr=tiers[k], m=tr.mult, c=ramp[Math.min(i,ramp.length-1)];
     return `<tr style="border-left-color:${c}"><td class="seed">#${tr.min}–${tr.max}</td>
-      <td>${m.gw}×</td><td>${m.gt}×</td><td>${m.r32}×</td><td>${m.r16}×</td><td>${m.qf}×</td><td>${m.sf}×</td><td>${m.final}×</td></tr>`;
+      <td>${m.gw}×</td><td>${m.r32}×</td><td>${m.r16}×</td><td>${m.qf}×</td><td>${m.sf}×</td><td>${m.final}×</td></tr>`;
   }).join('');
 
   // worked examples using a real top seed and a real bottom seed
