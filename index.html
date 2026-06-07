@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 World Cup Pool — Make Your Picks</title>
+<style>
+  :root{
+    --purple:#37003c; --pink:#e90052; --green:#00ff87; --cyan:#02efff;
+    --ink:#37003c; --mut:#6f6f86; --line:#ece9f2; --bg:#f7f7fb; --card:#ffffff;
+    --ok:#00c46a; --bad:#e90052; --grad:linear-gradient(90deg,var(--cyan),var(--green));
+    --shadow:0 6px 22px rgba(55,0,60,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .topbar{background:linear-gradient(120deg,var(--purple),#5a0f63);color:#fff;padding:0}
+  .topbar .inner{max-width:1040px;margin:0 auto;padding:22px 22px 26px;position:relative}
+  .topbar .grad{height:5px;background:var(--grad)}
+  h1{margin:0;font-size:1.7rem;letter-spacing:-.02em;font-weight:800}
+  .sub{color:#e7d9ec;font-size:.95rem;margin-top:4px}
+  .navlink{display:inline-block;margin-top:14px;background:rgba(255,255,255,.14);color:#fff;
+    text-decoration:none;font-weight:700;font-size:.85rem;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+  .navlink:hover{background:rgba(255,255,255,.24)}
+  .wrap{max-width:1040px;margin:0 auto;padding:18px 22px 130px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;margin:16px 0}
+  .card h2{margin:0 0 4px;font-size:1.05rem}
+  .rules{color:var(--mut);font-size:.92rem}.rules b{color:var(--ink)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+  label.f{display:block;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:0 0 6px}
+  input[type=text],input[type=email]{width:100%;padding:12px 14px;border-radius:11px;border:1.5px solid var(--line);
+    background:#fff;color:var(--ink);font-size:1rem;transition:border-color .15s}
+  input:focus{outline:none;border-color:var(--cyan)}
+  .groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:14px}
+  .grp{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:var(--shadow)}
+  .grp .gh{background:linear-gradient(120deg,var(--purple),#6a1773);color:#fff;padding:9px 14px;font-weight:800;font-size:.9rem;
+    display:flex;align-items:center;gap:8px}
+  .grp .gh .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .grp .body{padding:8px}
+  .team{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;cursor:pointer;transition:background .12s;position:relative}
+  .team:hover{background:#f4f1f9}
+  .chk{width:22px;height:22px;border-radius:7px;border:2px solid #d6d0e2;display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;transition:.12s;background:#fff}
+  .chk svg{width:13px;height:13px;opacity:0;transform:scale(.5);transition:.12s}
+  .team .nm{flex:1;font-weight:600}
+  .seed{font-variant-numeric:tabular-nums;color:var(--purple);font-size:.78rem;font-weight:800;
+    background:#f0ecf6;padding:3px 9px;border-radius:999px}
+  .team.sel{background:linear-gradient(120deg,#f0fff8,#eafff4)}
+  .team.sel .chk{background:var(--green);border-color:var(--green)}
+  .team.sel .chk svg{opacity:1;transform:scale(1)}
+  .team.sel .seed{background:var(--purple);color:#fff}
+  .team.dis{opacity:.38;cursor:not-allowed}
+  .team.dis:hover{background:none}
+  /* sticky action bar */
+  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(55,0,60,.08);padding:12px 16px}
+  .bar .inner{max-width:1040px;margin:0 auto;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .pill{display:flex;align-items:center;gap:8px;background:#f4f1f9;border-radius:999px;padding:8px 16px;font-size:.9rem;font-weight:600}
+  .pill b{font-size:1.15rem;font-variant-numeric:tabular-nums}
+  .pill.good{background:#e8fff4;color:var(--ok)} .pill.bad{background:#ffe9f1;color:var(--bad)}
+  button#submit{background:var(--grad);color:var(--purple);border:0;border-radius:999px;padding:13px 26px;font-size:1rem;
+    font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,255,135,.35);transition:.15s}
+  button#submit:hover:not(:disabled){transform:translateY(-1px)}
+  button#submit:disabled{background:#e7e3ee;color:#a59fb3;box-shadow:none;cursor:not-allowed}
+  .err{color:var(--bad);font-size:.85rem;text-align:center;width:100%;min-height:1em;font-weight:600;margin-top:2px}
+  .load{padding:44px;text-align:center;color:var(--mut)}
+  code{background:#f0ecf6;padding:2px 6px;border-radius:6px;font-size:.85em}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="inner">
+    <h1>⚽ 2026 World Cup Pool</h1>
+    <div class="sub" id="sub">Pick your teams</div>
+    <a class="navlink" href="standings.html">View live standings →</a>
+  </div>
+  <div class="grad"></div>
+</div>
+
+<div class="wrap">
+  <div class="card rules" id="rulesBox"></div>
+
+  <div class="card">
+    <h2>Your details</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div><label class="f">Name</label><input type="text" id="player" placeholder="First and last name" autocomplete="name"></div>
+      <div><label class="f">Email</label><input type="email" id="email" placeholder="you@email.com" autocomplete="email"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Choose your squad</h2>
+    <div id="board" class="load">Loading teams…</div>
+  </div>
+</div>
+
+<div class="bar">
+  <div class="inner">
+    <div class="pill bad" id="cntPill">Teams <b id="cnt">0</b> / <span id="need">6</span></div>
+    <div class="pill bad" id="sumPill">Combined rank <b id="sum">0</b> <span style="font-weight:500;opacity:.8">/ need ≥<span id="floor">72</span></span></div>
+    <button id="submit" disabled>Submit picks</button>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<script src="scoring.js"></script>
+<script>
+const CHK='<svg viewBox="0 0 24 24" fill="none" stroke="#37003c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+let CONF=null, TEAMS=[], BYNAME={}, picked=new Set();
+
+fetch('data/teams.json').then(r=>r.json()).then(d=>{
+  CONF=d.config; TEAMS=d.teams; TEAMS.forEach(t=>BYNAME[t.name]=t);
+  document.getElementById('need').textContent=CONF.picksRequired;
+  document.getElementById('floor').textContent=CONF.combinedRankMin;
+  document.getElementById('sub').textContent=`Pick exactly ${CONF.picksRequired} teams whose combined rank is ${CONF.combinedRankMin}+`;
+  document.getElementById('rulesBox').innerHTML=
+    `<h2 style="color:var(--purple)">How it works</h2>`+
+    `<p style="margin:.4rem 0 0">Pick <b>${CONF.picksRequired}</b> teams. Each team's seed (1–48) must total <b>${CONF.combinedRankMin} or more</b>, so you'll need some underdogs. `+
+    `Wins = 1 pt, group ties = 0.5 pt, each multiplied by the team's stage multiplier — lower seeds pay more. `+
+    `Entry $${CONF.entryFee}. ${CONF.payout} Seeds locked from the ${CONF.rankingSet}.</p>`;
+  render();
+}).catch(()=>{document.getElementById('board').innerHTML=
+  '⚠️ Could not load team data. If you opened this file directly, run a local server (<code>python3 -m http.server</code>) or use the published site.';});
+
+function render(){
+  const groups={}; TEAMS.forEach(t=>{(groups[t.group]=groups[t.group]||[]).push(t)});
+  const board=document.getElementById('board'); board.className=''; board.innerHTML='';
+  const grid=document.createElement('div'); grid.className='groups';
+  Object.keys(groups).sort().forEach(g=>{
+    const box=document.createElement('div'); box.className='grp';
+    box.innerHTML=`<div class="gh"><span class="dot"></span>Group ${g}</div>`;
+    const body=document.createElement('div'); body.className='body';
+    groups[g].sort((a,b)=>a.rank-b.rank).forEach(t=>{
+      const row=document.createElement('div'); row.className='team'; row.dataset.name=t.name;
+      row.innerHTML=`<div class="chk">${CHK}</div><span class="nm">${t.name}</span><span class="seed">#${t.rank}</span>`;
+      row.addEventListener('click',()=>{ if(row.classList.contains('dis'))return; toggle(t.name); });
+      body.appendChild(row);
+    });
+    box.appendChild(body); grid.appendChild(box);
+  });
+  board.appendChild(grid); update();
+}
+function toggle(name){ picked.has(name)?picked.delete(name):picked.add(name); update(); }
+function update(){
+  const need=CONF.picksRequired;
+  document.querySelectorAll('.team').forEach(row=>{
+    const n=row.dataset.name, sel=picked.has(n);
+    row.classList.toggle('sel',sel);
+    row.classList.toggle('dis', !sel && picked.size>=need);
+  });
+  const v=validatePicks([...picked],BYNAME,CONF);
+  const cnt=document.getElementById('cnt'), sum=document.getElementById('sum');
+  cnt.textContent=picked.size; sum.textContent=v.combined;
+  document.getElementById('cntPill').className='pill '+(picked.size===need?'good':'bad');
+  document.getElementById('sumPill').className='pill '+(v.combined>=CONF.combinedRankMin&&picked.size===need?'good':'bad');
+  const nameOk=document.getElementById('player').value.trim() && document.getElementById('email').value.trim();
+  document.getElementById('submit').disabled=!(v.ok && nameOk);
+  document.getElementById('err').textContent = picked.size? (v.errors[0]||(nameOk?'':'Add your name and email above.')) : '';
+}
+['player','email'].forEach(id=>document.getElementById(id).addEventListener('input',update));
+
+document.getElementById('submit').addEventListener('click',()=>{
+  const player=document.getElementById('player').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const list=[...picked].map(n=>({n,r:BYNAME[n].rank})).sort((a,b)=>a.r-b.r);
+  const combined=list.reduce((s,x)=>s+x.r,0);
+  const lines=list.map(x=>`  - ${x.n} (#${x.r})`).join('\n');
+  const body=`Player: ${player}\nEmail: ${email}\n\nPicks (${list.length} teams, combined rank ${combined}):\n${lines}\n\n— sent from the 2026 World Cup Pool pick form`;
+  window.location.href=`mailto:${encodeURIComponent(CONF.submitEmail||'')}?subject=${encodeURIComponent('World Cup Pool entry — '+player)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('err').textContent='Opening your email app — just hit send to submit. Then send your $10 entry fee.';
+});
+</script>
+</body>
+</html>

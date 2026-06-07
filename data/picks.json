@@ -1,0 +1,17 @@
+{
+  "locked": false,
+  "entries": [
+    {
+      "player": "EXAMPLE - delete me",
+      "email": "x@y.com",
+      "teams": [
+        "France",
+        "Brazil",
+        "Croatia",
+        "Norway",
+        "Czechia",
+        "Ghana"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,789 @@
+{
+  "config": {
+    "season": "2026 FIFA World Cup",
+    "entryFee": 10,
+    "picksRequired": 6,
+    "combinedRankMin": 72,
+    "rankingSet": "FIFA/Coca-Cola Men's World Ranking, 1 April 2026",
+    "submitEmail": "tylerraborn@gmail.com",
+    "deadline": "2026-06-11T00:00:00",
+    "payout": "1st: 75% of pool less $10  |  2nd: 25% less $10  |  3rd: $10 (top ~20% paid; admin adds slots if pool > 15)",
+    "rules": {
+      "win": 1.0,
+      "groupTie": 0.5,
+      "shootoutWinner": "full win",
+      "shootoutLoser": "0",
+      "thirdPlaceGame": "not scored"
+    }
+  },
+  "teams": [
+    {
+      "rank": 1,
+      "name": "France",
+      "group": "I",
+      "fifaRank": 1,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Spain",
+      "group": "H",
+      "fifaRank": 2,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 3,
+      "name": "Argentina",
+      "group": "J",
+      "fifaRank": 3,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 4,
+      "name": "England",
+      "group": "L",
+      "fifaRank": 4,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 5,
+      "name": "Portugal",
+      "group": "K",
+      "fifaRank": 5,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 6,
+      "name": "Brazil",
+      "group": "C",
+      "fifaRank": 6,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 7,
+      "name": "Netherlands",
+      "group": "F",
+      "fifaRank": 7,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 8,
+      "name": "Morocco",
+      "group": "C",
+      "fifaRank": 8,
+      "tier": 1,
+      "mult": {
+        "gw": 1.0,
+        "gt": 1.0,
+        "r32": 1.0,
+        "r16": 1.0,
+        "qf": 1.5,
+        "sf": 2.0,
+        "final": 3.0
+      }
+    },
+    {
+      "rank": 9,
+      "name": "Belgium",
+      "group": "G",
+      "fifaRank": 9,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 10,
+      "name": "Germany",
+      "group": "E",
+      "fifaRank": 10,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 11,
+      "name": "Croatia",
+      "group": "L",
+      "fifaRank": 11,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 12,
+      "name": "Colombia",
+      "group": "K",
+      "fifaRank": 13,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 13,
+      "name": "Senegal",
+      "group": "I",
+      "fifaRank": 14,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 14,
+      "name": "Mexico",
+      "group": "A",
+      "fifaRank": 15,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 15,
+      "name": "USA",
+      "group": "D",
+      "fifaRank": 16,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 16,
+      "name": "Uruguay",
+      "group": "H",
+      "fifaRank": 17,
+      "tier": 2,
+      "mult": {
+        "gw": 1.5,
+        "gt": 1.5,
+        "r32": 2.0,
+        "r16": 2.0,
+        "qf": 2.5,
+        "sf": 3.0,
+        "final": 4.0
+      }
+    },
+    {
+      "rank": 17,
+      "name": "Japan",
+      "group": "F",
+      "fifaRank": 18,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 18,
+      "name": "Switzerland",
+      "group": "B",
+      "fifaRank": 19,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 19,
+      "name": "Iran",
+      "group": "G",
+      "fifaRank": 21,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 20,
+      "name": "Turkey",
+      "group": "D",
+      "fifaRank": 22,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 21,
+      "name": "Ecuador",
+      "group": "E",
+      "fifaRank": 23,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 22,
+      "name": "Austria",
+      "group": "J",
+      "fifaRank": 24,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 23,
+      "name": "South Korea",
+      "group": "A",
+      "fifaRank": 25,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 24,
+      "name": "Australia",
+      "group": "D",
+      "fifaRank": 27,
+      "tier": 3,
+      "mult": {
+        "gw": 2.0,
+        "gt": 2.0,
+        "r32": 2.5,
+        "r16": 3.0,
+        "qf": 4.0,
+        "sf": 5.0,
+        "final": 6.0
+      }
+    },
+    {
+      "rank": 25,
+      "name": "Algeria",
+      "group": "J",
+      "fifaRank": 28,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 26,
+      "name": "Egypt",
+      "group": "G",
+      "fifaRank": 29,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 27,
+      "name": "Canada",
+      "group": "B",
+      "fifaRank": 30,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 28,
+      "name": "Norway",
+      "group": "I",
+      "fifaRank": 31,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 29,
+      "name": "Panama",
+      "group": "L",
+      "fifaRank": 33,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 30,
+      "name": "Cote d'Ivoire",
+      "group": "E",
+      "fifaRank": 34,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 31,
+      "name": "Sweden",
+      "group": "F",
+      "fifaRank": 38,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 32,
+      "name": "Paraguay",
+      "group": "D",
+      "fifaRank": 40,
+      "tier": 4,
+      "mult": {
+        "gw": 3.0,
+        "gt": 3.0,
+        "r32": 3.5,
+        "r16": 4.0,
+        "qf": 5.0,
+        "sf": 6.0,
+        "final": 7.0
+      }
+    },
+    {
+      "rank": 33,
+      "name": "Czechia",
+      "group": "A",
+      "fifaRank": 41,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 34,
+      "name": "Scotland",
+      "group": "C",
+      "fifaRank": 43,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 35,
+      "name": "Tunisia",
+      "group": "F",
+      "fifaRank": 44,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 36,
+      "name": "DR Congo",
+      "group": "K",
+      "fifaRank": 46,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 37,
+      "name": "Uzbekistan",
+      "group": "K",
+      "fifaRank": 50,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 38,
+      "name": "Qatar",
+      "group": "B",
+      "fifaRank": 55,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 39,
+      "name": "Iraq",
+      "group": "I",
+      "fifaRank": 57,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 40,
+      "name": "South Africa",
+      "group": "A",
+      "fifaRank": 60,
+      "tier": 5,
+      "mult": {
+        "gw": 4.0,
+        "gt": 4.0,
+        "r32": 5.0,
+        "r16": 6.0,
+        "qf": 7.0,
+        "sf": 8.0,
+        "final": 9.0
+      }
+    },
+    {
+      "rank": 41,
+      "name": "Saudi Arabia",
+      "group": "H",
+      "fifaRank": 61,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 42,
+      "name": "Jordan",
+      "group": "J",
+      "fifaRank": 63,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 43,
+      "name": "Bosnia & Herzegovina",
+      "group": "B",
+      "fifaRank": 65,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 44,
+      "name": "Cape Verde",
+      "group": "H",
+      "fifaRank": 69,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 45,
+      "name": "Ghana",
+      "group": "L",
+      "fifaRank": 74,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 46,
+      "name": "Curacao",
+      "group": "E",
+      "fifaRank": 82,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 47,
+      "name": "Haiti",
+      "group": "C",
+      "fifaRank": 83,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    },
+    {
+      "rank": 48,
+      "name": "New Zealand",
+      "group": "G",
+      "fifaRank": 85,
+      "tier": 6,
+      "mult": {
+        "gw": 5.0,
+        "gt": 5.0,
+        "r32": 6.0,
+        "r16": 7.0,
+        "qf": 8.0,
+        "sf": 9.0,
+        "final": 10.0
+      }
+    }
+  ]
+}
