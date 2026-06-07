@@ -66,6 +66,27 @@
   .err{color:var(--bad);font-size:.85rem;text-align:center;width:100%;min-height:1em;font-weight:600;margin-top:2px}
   .load{padding:44px;text-align:center;color:var(--mut)}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px;font-size:.85em}
+  /* scoring explainer */
+  details.how{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin:16px 0;overflow:hidden}
+  details.how>summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:space-between}
+  details.how>summary::-webkit-details-marker{display:none}
+  details.how>summary .chev{transition:transform .15s;color:var(--mut)}
+  details.how[open]>summary .chev{transform:rotate(180deg)}
+  .how .inner{padding:0 20px 20px;color:var(--mut);font-size:.92rem}
+  .how .inner b{color:var(--ink)}
+  .scorebox{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 16px}
+  .scorebox .s{flex:1;min-width:150px;background:#f7f5fb;border-radius:12px;padding:12px 14px}
+  .scorebox .s .big{font-size:1.25rem;font-weight:800;color:var(--purple)}
+  table.mult{width:100%;border-collapse:collapse;font-size:.86rem;margin:6px 0}
+  table.mult th,table.mult td{padding:8px 6px;text-align:center;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+  table.mult th{background:var(--purple);color:#fff;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;border:0}
+  table.mult th:first-child,table.mult td:first-child{text-align:left}
+  table.mult thead th:first-child{border-top-left-radius:10px}
+  table.mult thead th:last-child{border-top-right-radius:10px}
+  table.mult td.seed{font-weight:800;color:var(--purple)}
+  table.mult tr td{border-left:4px solid transparent}
+  .ex{background:linear-gradient(120deg,#f0fff8,#eafff4);border-radius:12px;padding:12px 14px;margin-top:14px;color:var(--ink)}
+  .ex .lbl{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ok);margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -80,6 +101,13 @@
 
 <div class="wrap">
   <div class="card rules" id="rulesBox"></div>
+
+  <details class="how" id="howBox">
+    <summary>📊 How scoring &amp; multipliers work
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="inner" id="howInner"></div>
+  </details>
 
   <div class="card">
     <h2>Your details</h2>
@@ -119,9 +147,53 @@ fetch('data/teams.json').then(r=>r.json()).then(d=>{
     `<p style="margin:.4rem 0 0">Pick <b>${CONF.picksRequired}</b> teams. Each team's seed (1–48) must total <b>${CONF.combinedRankMin} or more</b>, so you'll need some underdogs. `+
     `Wins = 1 pt, group ties = 0.5 pt, each multiplied by the team's stage multiplier — lower seeds pay more. `+
     `Entry $${CONF.entryFee}. ${CONF.payout} Seeds locked from the ${CONF.rankingSet}.</p>`;
+  buildHow();
   render();
 }).catch(()=>{document.getElementById('board').innerHTML=
   '⚠️ Could not load team data. If you opened this file directly, run a local server (<code>python3 -m http.server</code>) or use the published site.';});
+
+function buildHow(){
+  // derive the tier table straight from teams.json so it always matches the data
+  const tiers={};
+  TEAMS.forEach(t=>{
+    const k=t.tier;
+    if(!tiers[k]) tiers[k]={min:t.rank,max:t.rank,mult:t.mult};
+    tiers[k].min=Math.min(tiers[k].min,t.rank); tiers[k].max=Math.max(tiers[k].max,t.rank);
+  });
+  const keys=Object.keys(tiers).map(Number).sort((a,b)=>a-b);
+  // colour ramp from soft (top seeds) to vivid green (underdogs)
+  const ramp=['#d9d3e8','#bfe6d6','#9fe9c4','#6fe9ab','#3fe592','#00d97a'];
+  const rows=keys.map((k,i)=>{
+    const tr=tiers[k], m=tr.mult, c=ramp[Math.min(i,ramp.length-1)];
+    return `<tr style="border-left-color:${c}"><td class="seed">#${tr.min}–${tr.max}</td>
+      <td>${m.gw}×</td><td>${m.gt}×</td><td>${m.r32}×</td><td>${m.r16}×</td><td>${m.qf}×</td><td>${m.sf}×</td><td>${m.final}×</td></tr>`;
+  }).join('');
+
+  // worked examples using a real top seed and a real bottom seed
+  const top=TEAMS[0], low=TEAMS[TEAMS.length-1];
+  const lowPts = (2*low.mult.gw + low.mult.r32);
+  const topPts = (2*top.mult.gw + top.mult.r32);
+
+  document.getElementById('howInner').innerHTML=
+    `<p style="margin:0 0 10px">Every match your team plays earns points, then that team's <b>stage multiplier</b> scales it. The catch: <b>the lower a team's seed, the bigger its multipliers</b> — so a deep run by an underdog is worth far more than the same run by a favorite. That's the whole reason for the combined-rank rule.</p>
+     <div class="scorebox">
+       <div class="s"><div class="big">1 pt</div>base for a win (group or knockout)</div>
+       <div class="s"><div class="big">0.5 pt</div>base for a group-stage tie</div>
+       <div class="s"><div class="big">× mult</div>by the team's seed tier &amp; the stage</div>
+     </div>
+     <p style="margin:0 0 6px"><b>Multiplier by seed tier and stage</b> (Grp = each group win/tie; then each knockout win):</p>
+     <div style="overflow-x:auto"><table class="mult">
+       <thead><tr><th>Seed</th><th>Grp W/T</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
+       <tbody>${rows}</tbody></table></div>
+     <p style="margin:10px 0 0;font-size:.84rem">A win and a tie in the group stage use the same multiplier (the "Grp W/T" column); you just earn the 1-pt or 0.5-pt base before multiplying.</p>
+     <div class="ex">
+       <div class="lbl">Example — the underdog payoff</div>
+       <b>${low.name}</b> (seed #${low.rank}) wins 2 group games and then wins its Round of 32 match:
+       2 × ${low.mult.gw} + ${low.mult.r32} = <b>${Math.round(lowPts*100)/100} pts</b>.<br>
+       <b>${top.name}</b> (seed #${top.rank}) doing the exact same thing: 2 × ${top.mult.gw} + ${top.mult.r32} = <b>${Math.round(topPts*100)/100} pts</b>.
+     </div>
+     <p style="margin:12px 0 0;font-size:.84rem"><b>Two rules worth knowing:</b> a knockout win on penalties counts as a full win (the loser gets nothing), and the 3rd-place playoff is not scored.</p>`;
+}
 
 function render(){
   const groups={}; TEAMS.forEach(t=>{(groups[t.group]=groups[t.group]||[]).push(t)});
