@@ -15,7 +15,7 @@
       "shootoutLoser": "0",
       "thirdPlaceGame": "not scored",
       "knockoutBaseValues": "R32 2, R16 4, QF 6, SF 8, Final 10",
-      "ownership": "team total x bonus by how few entrants picked it"
+      "ownership": "team total x bonus: >40% owned x1, 30-40% x1.15, 20-30% x1.35, 10-20% x1.6, <=10% x2"
     },
     "baseValues": {
       "gw": 1,
@@ -40,12 +40,16 @@
         "mult": 2.0
       },
       {
-        "maxPct": 25,
-        "mult": 1.5
+        "maxPct": 20,
+        "mult": 1.6
       },
       {
-        "maxPct": 50,
-        "mult": 1.25
+        "maxPct": 30,
+        "mult": 1.35
+      },
+      {
+        "maxPct": 40,
+        "mult": 1.15
       },
       {
         "maxPct": 100,
