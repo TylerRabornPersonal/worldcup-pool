@@ -59,6 +59,7 @@
   td.t{font-variant-numeric:tabular-nums}
   td .seed{color:var(--mut);font-size:.78rem;font-weight:700}
   tr.trow td b{color:var(--purple)}
+  .bonus{background:#e8fff4;color:var(--ok);filter:brightness(.85);font-weight:800;padding:1px 7px;border-radius:999px;font-size:.8rem}
   .load{padding:50px;text-align:center;color:var(--mut)}
   .meta-foot{text-align:center;color:var(--mut);font-size:.82rem;margin-top:14px}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
@@ -93,7 +94,7 @@ Promise.all([
   const results=rd.teams||{};
   document.getElementById('sub').textContent=CONF.season+' • seeds from '+CONF.rankingSet;
 
-  const rows=computeStandings(entries,TEAMS,results);
+  const rows=computeStandings(entries,TEAMS,results,CONF);
   const pool=entries.length*CONF.entryFee;
   const slots=[Math.max(0,pool*0.75-CONF.entryFee),Math.max(0,pool*0.25-CONF.entryFee),CONF.entryFee];
   const prizes=computePrizes(rows,pool,slots);
@@ -111,21 +112,23 @@ Promise.all([
     const div=document.createElement('div'); div.className='row'+(r.place<=3?(' p'+r.place):'');
     const pz=prizes[r.player]?` · <span class="pz">$${prizes[r.player].toFixed(2)}</span>`:'';
     const teamRows=r.teams.map(t=>{const b=t.breakdown||{};
+      const bz=t.bonus>1?`<span class="bonus">×${t.bonus}</span>`:`×${t.bonus}`;
       return `<tr class="trow"><td>${t.team} <span class="seed">#${t.rank}</span></td>
         <td class="t">${b.group||0}</td><td class="t">${b.r32||0}</td><td class="t">${b.r16||0}</td>
         <td class="t">${b.qf||0}</td><td class="t">${b.sf||0}</td><td class="t">${b.final||0}</td>
+        <td class="t">${t.ownedPct}%</td><td class="t">${bz}</td>
         <td class="t"><b>${t.points}</b></td></tr>`;}).join('');
     div.innerHTML=
       `<div class="head"><div class="place">${r.place}</div>
         <div class="who"><div class="nm">${r.player}</div><div class="meta">${r.teams.length} teams${pz}</div></div>
         <div class="tot"><b>${r.total.toFixed(1)}</b><small>pts</small></div>${CARET}</div>
        <div class="detail"><table>
-        <tr><th>Team</th><th>Grp</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Fin</th><th>Pts</th></tr>
+        <tr><th>Team</th><th>Grp</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Fin</th><th>Own</th><th>Bonus</th><th>Pts</th></tr>
         ${teamRows}</table></div>`;
     div.querySelector('.head').addEventListener('click',()=>div.classList.toggle('open'));
     board.appendChild(div);
   });
-  document.getElementById('meta').textContent='Results last updated: '+(rd.lastUpdated||'—')+' · tap any row for team-by-team points';
+  document.getElementById('meta').innerHTML='Results last updated: '+(rd.lastUpdated||'—')+' · tap any row for team-by-team points · <b>Own</b> = % of entrants who picked that team, <b>Bonus</b> = ownership reward (≤10% owned ×2, ≤25% ×1.5, ≤50% ×1.25)';
 }).catch(()=>{document.getElementById('board').innerHTML=
   '<div class="load">⚠️ Could not load data. View on the published site, or run a local server (<code>python3 -m http.server</code>).</div>';});
 </script>
