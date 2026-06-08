@@ -62,6 +62,9 @@
   .bonus{background:#e8fff4;color:var(--ok);filter:brightness(.85);font-weight:800;padding:1px 7px;border-radius:999px;font-size:.8rem}
   .load{padding:50px;text-align:center;color:var(--mut)}
   .meta-foot{text-align:center;color:var(--mut);font-size:.82rem;margin-top:14px}
+  .paystrip{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+    padding:11px 14px;margin:0 0 12px;font-size:.9rem;color:var(--purple);text-align:center}
+  .paystrip .ps-note{color:var(--mut);font-weight:400;font-size:.82rem}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
 </style>
 </head>
@@ -77,6 +80,7 @@
 
 <div class="wrap">
   <div class="tiles" id="tiles"></div>
+  <div class="paystrip" id="paystrip"></div>
   <div id="board" class="load">Loading standings…</div>
   <div class="meta-foot" id="meta"></div>
 </div>
@@ -95,16 +99,24 @@ Promise.all([
   document.getElementById('sub').textContent=CONF.season+' • seeds from '+CONF.rankingSet;
 
   const rows=computeStandings(entries,TEAMS,results,CONF);
-  const pool=entries.length*CONF.entryFee;
-  const slots=[Math.max(0,pool*0.75-CONF.entryFee),Math.max(0,pool*0.25-CONF.entryFee),CONF.entryFee];
+  const fee=CONF.entryFee, n=rows.length, pool=n*fee;
+  // 3rd + last place refunded their entry; 1st/2nd split 75/25 of what's left
+  const remaining=Math.max(0, pool - (n>2?fee:0) - (n>3?fee:0));
+  const slots=new Array(Math.max(n,1)).fill(0);
+  slots[0]=remaining*0.75; if(n>1) slots[1]=remaining*0.25;
+  if(n>2) slots[2]=fee; if(n>3) slots[n-1]=fee;   // 3rd and last get money back
   const prizes=computePrizes(rows,pool,slots);
   const leader=rows[0]?rows[0].player:'—';
+  const payChips=`1st $${(slots[0]||0).toFixed(0)} · 2nd $${(slots[1]||0).toFixed(0)}`+
+    (n>2?` · 3rd $${fee}`:'')+(n>3?` · last $${fee}`:'');
 
   document.getElementById('tiles').innerHTML=
     `<div class="tile t1"><div class="v">$${pool}</div><div class="k">Prize pool</div></div>
      <div class="tile t2"><div class="v">${entries.length}</div><div class="k">Entries</div></div>
      <div class="tile t3"><div class="v">${rows[0]?rows[0].total.toFixed(1):'0'}</div><div class="k">Top score</div></div>
      <div class="tile t4"><div class="v" style="font-size:1.15rem">${leader}</div><div class="k">Current leader</div></div>`;
+  document.getElementById('paystrip').innerHTML=
+    `<b>Payouts</b> &nbsp;${payChips} &nbsp;<span class="ps-note">(3rd &amp; last get their $${fee} back; 1st/2nd split the rest 75/25)</span>`;
 
   const board=document.getElementById('board'); board.className=''; board.innerHTML='';
   if(!rows.length){board.innerHTML='<div class="load">No entries yet — they appear here once picks are submitted.</div>';}
