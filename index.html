@@ -121,6 +121,8 @@
   .payouts table.mult td:first-child{font-weight:700}
   .payouts .po-note{margin:8px 0 0;font-size:.84rem;color:var(--mut)}
   .payouts .po-note b{color:var(--ink)}
+  .payouts .po-pay{margin:8px 0 0;font-size:.9rem;background:#e8fff4;border:1px solid #9fe9c4;border-radius:10px;padding:9px 12px;color:#06351f}
+  .payouts .po-pay b{color:#06351f}
   /* points calculator */
   .calcsub{color:var(--mut);font-size:.9rem;margin:.3rem 0 14px}
   .calcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
@@ -261,6 +263,7 @@ function buildHow(){
         <tr><td>🪦 Last</td><td><b>$${fee}</b> — entry back</td></tr>
       </tbody></table>
       <p class="po-note">Entry is <b>$${fee}</b>. 3rd place and last place get their money back; 1st and 2nd split everything left over, 75/25. The more people enter, the bigger 1st and 2nd get.</p>
+      <p class="po-pay">💸 <b>To enter:</b> submit your picks, then Venmo your <b>$${fee}</b> to <b>@Tyler-Raborn</b> before the first game kicks off.</p>
     </div>
 
     <p class="fine"><b>Good to know:</b> a group tie = half a win · a knockout win on penalties counts as a full win (the loser gets nothing) · the 3rd-place playoff is not scored · ties in the standings split the prize slots. Seeds are locked from the ${CONF.rankingSet}.</p>`;
@@ -275,7 +278,7 @@ function buildCalc(){
   [['none','Out in group stage'],['r16','Made Round of 16'],['qf','Made Quarterfinal'],
    ['sf','Made Semifinal'],['final','Made Final (runner-up)'],['champ','Won the Cup 🏆']]
    .forEach(([v,l])=>document.getElementById('cRound').add(new Option(l,v)));
-  teamSel.value=(TEAMS.find(t=>t.name==='Norway')||TEAMS[0]).name;
+  teamSel.value=(TEAMS.find(t=>t.name==='France')||TEAMS[0]).name;
   wSel.value='2'; dSel.value='0'; document.getElementById('cRound').value='qf';
   ['cTeam','cW','cD','cRound','cOwn'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
   calc();
@@ -350,7 +353,7 @@ document.getElementById('submit').addEventListener('click',()=>{
   const lines=list.map(x=>`  - ${x.n} (#${x.r})`).join('\n');
   const body=`Player: ${player}\nEmail: ${email}\n\nPicks (${list.length} teams, combined rank ${combined}):\n${lines}\n\n— sent from the 2026 World Cup Pool pick form`;
   window.location.href=`mailto:${encodeURIComponent(CONF.submitEmail||'')}?subject=${encodeURIComponent('World Cup Pool entry — '+player)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('err').textContent='Opening your email app — just hit send to submit. Then send your $10 entry fee.';
+  document.getElementById('err').textContent=`Opening your email app — just hit send to submit. Then Venmo $${CONF.entryFee} to @Tyler-Raborn before the first game kicks off.`;
 });
 </script>
 </body>
