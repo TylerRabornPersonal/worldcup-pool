@@ -67,13 +67,6 @@
   .load{padding:44px;text-align:center;color:var(--mut)}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px;font-size:.85em}
   /* scoring explainer */
-  details.how{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin:16px 0;overflow:hidden}
-  details.how>summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:1.05rem;display:flex;align-items:center;justify-content:space-between}
-  details.how>summary::-webkit-details-marker{display:none}
-  details.how>summary .chev{transition:transform .15s;color:var(--mut)}
-  details.how[open]>summary .chev{transform:rotate(180deg)}
-  .how .inner{padding:0 20px 20px;color:var(--mut);font-size:.92rem}
-  .how .inner b{color:var(--ink)}
   .scorebox{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 16px}
   .scorebox .s{flex:1;min-width:150px;background:#f7f5fb;border-radius:12px;padding:12px 14px}
   .scorebox .s .big{font-size:1.25rem;font-weight:800;color:var(--purple)}
@@ -89,6 +82,31 @@
   .ex .lbl{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ok);margin-bottom:4px}
   table.mult tr.bonusrow td{color:var(--ok);filter:brightness(.85)}
   table.mult tr.bonusrow td b{color:var(--ok);filter:brightness(.8)}
+  table.mult tr.norow td{color:var(--mut)}
+  /* always-visible rules section */
+  .rulesfull{padding:22px}
+  .rulesfull .rh{margin:0 0 6px;font-size:1.25rem;color:var(--purple)}
+  .rulesfull .lead{margin:0 0 14px;color:var(--mut);font-size:.95rem}
+  .rulesfull .lead b{color:var(--ink)}
+  .formula{display:flex;flex-wrap:wrap;align-items:center;gap:4px;justify-content:center;text-align:center;
+    background:#f7f5fb;border:1px solid var(--line);border-radius:12px;padding:12px;font-weight:700;color:var(--mut);margin-bottom:16px}
+  .formula .fa{color:var(--purple)} .formula .fb{color:#7a3fb0} .formula .fc{color:var(--ok);filter:brightness(.85)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .step{background:#fbfaff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  .step.hot{background:linear-gradient(160deg,#f0fff8,#eafff4);border-color:#9fe9c4}
+  .step .sh{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;margin-bottom:4px}
+  .step .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+    background:var(--purple);color:#fff;font-size:.85rem;flex:0 0 auto}
+  .step.hot .num{background:var(--ok);filter:brightness(.85)}
+  .step .tag{margin-left:auto;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+    background:var(--ok);filter:brightness(.95);color:#06351f;padding:3px 8px;border-radius:999px}
+  .step .sd{margin:.25rem 0 10px;font-size:.86rem;color:var(--mut);line-height:1.45}
+  .step .sd b,.step .sd i{color:var(--ink)}
+  .step table.mult{margin:0}
+  .valuetip{margin:16px 0 0;background:#fffaf0;border:1px solid #ffe0a8;border-radius:14px;padding:14px 16px;font-size:.92rem;color:#5c4a1f}
+  .valuetip .vt-h{font-weight:800;color:#b9770a;margin-bottom:4px}
+  .valuetip b{color:#3d3112}
+  .rulesfull .fine{margin:14px 0 0;font-size:.8rem;color:var(--mut);line-height:1.6}
 </style>
 </head>
 <body>
@@ -102,14 +120,9 @@
 </div>
 
 <div class="wrap">
-  <div class="card rules" id="rulesBox"></div>
-
-  <details class="how" id="howBox">
-    <summary>📊 How scoring &amp; multipliers work
-      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-    </summary>
-    <div class="inner" id="howInner"></div>
-  </details>
+  <section class="card rulesfull">
+    <div id="rulesContent" class="load">Loading rules…</div>
+  </section>
 
   <div class="card">
     <h2>Your details</h2>
@@ -144,11 +157,6 @@ fetch('data/teams.json').then(r=>r.json()).then(d=>{
   document.getElementById('need').textContent=CONF.picksRequired;
   document.getElementById('floor').textContent=CONF.combinedRankMin;
   document.getElementById('sub').textContent=`Pick exactly ${CONF.picksRequired} teams whose combined rank is ${CONF.combinedRankMin}+`;
-  document.getElementById('rulesBox').innerHTML=
-    `<h2 style="color:var(--purple)">How it works</h2>`+
-    `<p style="margin:.4rem 0 0">Pick <b>${CONF.picksRequired}</b> teams. Each team's seed (1–48) must total <b>${CONF.combinedRankMin} or more</b>, so you'll need some underdogs. `+
-    `Each win earns points, multiplied by the team's seed tier (lower seeds pay more) — then by an ownership bonus that rewards picking teams few others do. `+
-    `Entry $${CONF.entryFee}. ${CONF.payout} Seeds locked from the ${CONF.rankingSet}. See "How scoring works" below.</p>`;
   buildHow();
   render();
 }).catch(()=>{document.getElementById('board').innerHTML=
@@ -156,7 +164,6 @@ fetch('data/teams.json').then(r=>r.json()).then(d=>{
 
 function buildHow(){
   const base=CONF.baseValues, sm=CONF.seedMultByTier, ob=CONF.ownershipBonus;
-  // seed range per tier (from the data, so it always matches)
   const ranges={};
   TEAMS.forEach(t=>{ if(!ranges[t.tier]) ranges[t.tier]={min:t.rank,max:t.rank};
     ranges[t.tier].min=Math.min(ranges[t.tier].min,t.rank); ranges[t.tier].max=Math.max(ranges[t.tier].max,t.rank); });
@@ -165,34 +172,55 @@ function buildHow(){
   const tierRows=keys.map((k,i)=>{const r=ranges[k]||{min:'',max:''};
     return `<tr style="border-left-color:${ramp[Math.min(i,ramp.length-1)]}"><td class="seed">#${r.min}–${r.max}</td><td><b>${sm[k]}×</b></td></tr>`;}).join('');
   const obRows=ob.map((t,i)=>{const prev=i?ob[i-1].maxPct:0;
-    const label=t.maxPct>=100?`more than ${prev}%`:(i===0?`≤ ${t.maxPct}%`:`${prev+1}–${t.maxPct}%`);
-    const hot=t.mult>1?'class="bonusrow"':'';
-    return `<tr ${hot}><td>${label} of entrants pick it</td><td><b>×${t.mult}</b></td></tr>`;}).join('');
+    const label=t.maxPct>=100?`more than ${prev}%`:(i===0?`${t.maxPct}% or fewer`:`${prev+1}–${t.maxPct}%`);
+    const hot=t.mult>1?'class="bonusrow"':'class="norow"';
+    return `<tr ${hot}><td>${label}</td><td><b>×${t.mult.toFixed(2).replace(/\.?0+$/,'')}</b></td></tr>`;}).join('');
 
   // worked example: a real mid-seed value team
   const ex=TEAMS.find(t=>t.name==='Norway')||TEAMS[27];
   const exBase=2*base.gw*ex.seedMult + base.r32*ex.seedMult; // 2 group wins + win R32
-  const hi=ob[0].mult;
+  const hi=ob[0].mult, hiPct=ob[0].maxPct;
 
-  document.getElementById('howInner').innerHTML=
-    `<p style="margin:0 0 10px">Three things decide a team's points: <b>which games it wins</b>, <b>how low its seed is</b>, and <b>how few people picked it</b>. Each win earns a base value, multiplied by the team's seed-tier multiplier, and then the team's whole total gets an ownership bonus.</p>
-     <p style="margin:0 0 6px"><b>1. Base value per result</b> — the deeper the round, the more it's worth:</p>
-     <div style="overflow-x:auto"><table class="mult">
-       <thead><tr><th>Grp win</th><th>Grp tie</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
-       <tbody><tr><td>${base.gw}</td><td>${base.gt}</td><td>${base.r32}</td><td>${base.r16}</td><td>${base.qf}</td><td>${base.sf}</td><td>${base.final}</td></tr></tbody></table></div>
-     <p style="margin:12px 0 6px"><b>2. Seed-tier multiplier</b> — lower seeds multiply every result they earn:</p>
-     <div style="display:flex;gap:18px;flex-wrap:wrap">
-       <table class="mult" style="flex:1;min-width:200px"><thead><tr><th>Seed</th><th>Multiplier</th></tr></thead><tbody>${tierRows}</tbody></table>
-       <table class="mult" style="flex:1;min-width:200px"><thead><tr><th>Ownership bonus</th><th>×</th></tr></thead><tbody>${obRows}</tbody></table>
-     </div>
-     <p style="margin:12px 0 6px"><b>3. Ownership bonus</b> — set when picks lock: the fewer entrants who picked a team, the bigger the bonus on its <i>whole</i> tournament total. Find a gem nobody else spots and it pays double.</p>
-     <div class="ex">
-       <div class="lbl">Example — seed + ownership stacking</div>
-       <b>${ex.name}</b> (seed #${ex.rank}, ${ex.seedMult}× tier) wins 2 group games and its Round of 32 match:
-       (2 × ${base.gw} + ${base.r32}) × ${ex.seedMult} = <b>${Math.round(exBase*100)/100} pts</b>.<br>
-       If ≤${ob[0].maxPct}% of entrants also picked ${ex.name}, that becomes ×${hi} = <b>${Math.round(exBase*hi*100)/100} pts</b>.
-     </div>
-     <p style="margin:12px 0 0;font-size:.84rem"><b>Also:</b> group tie = half a win; a knockout win on penalties counts as a full win (loser gets nothing); the 3rd-place playoff is not scored.</p>`;
+  document.getElementById('rulesContent').className='';
+  document.getElementById('rulesContent').innerHTML=
+   `<h2 class="rh">How the game works</h2>
+    <p class="lead">Pick <b>${CONF.picksRequired} teams</b> whose seeds (1–48) add up to <b>${CONF.combinedRankMin} or more</b> — so you can't just grab the favorites. Your teams score all tournament long; highest total wins. Entry $${CONF.entryFee}.</p>
+    <div class="formula">A team's points&nbsp; = &nbsp;<span class="fa">what it wins</span>&nbsp;×&nbsp;<span class="fb">seed multiplier</span>&nbsp;×&nbsp;<span class="fc">ownership bonus</span></div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sh"><span class="num">1</span> What it wins</div>
+        <p class="sd">Every game your team wins earns a base value. The deeper the round, the bigger it is.</p>
+        <table class="mult"><thead><tr><th>Grp W</th><th>Grp tie</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
+          <tbody><tr><td>${base.gw}</td><td>${base.gt}</td><td>${base.r32}</td><td>${base.r16}</td><td>${base.qf}</td><td>${base.sf}</td><td>${base.final}</td></tr></tbody></table>
+      </div>
+
+      <div class="step">
+        <div class="sh"><span class="num">2</span> Seed multiplier</div>
+        <p class="sd">Lower-seeded teams multiply <i>everything</i> they earn. The underdogs are worth more.</p>
+        <table class="mult"><thead><tr><th>Seed</th><th>×</th></tr></thead><tbody>${tierRows}</tbody></table>
+      </div>
+
+      <div class="step hot">
+        <div class="sh"><span class="num">3</span> Ownership bonus <span class="tag">the twist</span></div>
+        <p class="sd">Locked when picks close. The <b>fewer entrants</b> who pick a team, the bigger the bonus on its <b>whole</b> total. Popular picks (40%+) get nothing.</p>
+        <table class="mult"><thead><tr><th>% who pick it</th><th>×</th></tr></thead><tbody>${obRows}</tbody></table>
+      </div>
+    </div>
+
+    <div class="valuetip">
+      <div class="vt-h">💡 Where the value is</div>
+      Two ways to multiply a result, and they stack. A <b>low seed</b> nobody else thinks of can turn a single win into a huge score — while a favorite that everyone picks earns its base value and no ownership bonus at all. The winning move isn't "pick the best teams," it's <b>find good teams other people will overlook.</b>
+    </div>
+
+    <div class="ex">
+      <div class="lbl">Example — stacking both multipliers</div>
+      <b>${ex.name}</b> (seed #${ex.rank}, ${ex.seedMult}× tier) wins 2 group games and its Round of 32 match:
+      (2 × ${base.gw} + ${base.r32}) × ${ex.seedMult} = <b>${Math.round(exBase*100)/100} pts</b>.
+      If only ${hiPct}% or fewer also pick ${ex.name}, the ×${hi} ownership bonus makes that <b>${Math.round(exBase*hi*100)/100} pts</b>.
+    </div>
+
+    <p class="fine"><b>Good to know:</b> a group tie = half a win · a knockout win on penalties counts as a full win (the loser gets nothing) · the 3rd-place playoff is not scored · ties in the standings split the prize slots. Seeds are locked from the ${CONF.rankingSet}.</p>`;
 }
 
 function render(){
