@@ -103,10 +103,32 @@
   .step .sd{margin:.25rem 0 10px;font-size:.86rem;color:var(--mut);line-height:1.45}
   .step .sd b,.step .sd i{color:var(--ink)}
   .step table.mult{margin:0}
+  /* seed multiplier data bars */
+  .seedbars{display:flex;flex-direction:column;gap:7px}
+  .sbrow{display:flex;align-items:center;gap:10px}
+  .sblabel{width:60px;flex:0 0 auto;font-weight:800;font-size:.8rem;color:var(--purple)}
+  .sbtrack{flex:1;background:#ece6f4;border-radius:8px;height:26px;overflow:hidden}
+  .sbfill{height:100%;background:linear-gradient(90deg,#7a3fb0,#37003c);border-radius:8px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;min-width:38px;transition:width .4s ease}
+  .sbfill span{color:#fff;font-weight:800;font-size:.8rem}
   .valuetip{margin:16px 0 0;background:#fffaf0;border:1px solid #ffe0a8;border-radius:14px;padding:14px 16px;font-size:.92rem;color:#5c4a1f}
   .valuetip .vt-h{font-weight:800;color:#b9770a;margin-bottom:4px}
   .valuetip b{color:#3d3112}
   .rulesfull .fine{margin:14px 0 0;font-size:.8rem;color:var(--mut);line-height:1.6}
+  /* points calculator */
+  .calcsub{color:var(--mut);font-size:.9rem;margin:.3rem 0 14px}
+  .calcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .cfield{display:flex;flex-direction:column}
+  .cfield select{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:.95rem}
+  .cfield select:focus{outline:none;border-color:var(--cyan)}
+  .cfield input[type=range]{width:100%;accent-color:var(--purple);margin-top:10px}
+  .calcout{margin-top:16px;background:linear-gradient(135deg,#37003c,#5a1763);border-radius:14px;padding:16px 18px;color:#fff}
+  .calcout .cobig{font-size:2rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .calcout .cobig small{font-size:.8rem;font-weight:600;opacity:.8}
+  .calcout .cobreak{margin-top:8px;font-size:.85rem;color:#e7d9ec}
+  .calcout .cobar{margin-top:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+  .calcout .cobar>div{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:999px;transition:width .35s ease}
+  .calcout .cochip{display:inline-block;background:rgba(255,255,255,.16);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-right:6px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -136,6 +158,19 @@
     <h2>Choose your squad</h2>
     <div id="board" class="load">Loading teams…</div>
   </div>
+
+  <div class="card" id="calcCard">
+    <h2>🧮 Points calculator</h2>
+    <p class="calcsub">A "what if" sandbox — pick a team and your prediction to see what it would score. (Doesn't affect your entry.)</p>
+    <div class="calcgrid">
+      <div class="cfield"><label class="f">Team</label><select id="cTeam"></select></div>
+      <div class="cfield"><label class="f">Group wins</label><select id="cW"></select></div>
+      <div class="cfield"><label class="f">Group draws</label><select id="cD"></select></div>
+      <div class="cfield"><label class="f">How far they go</label><select id="cRound"></select></div>
+      <div class="cfield"><label class="f">Ownership: <span id="cOwnV">20%</span></label><input type="range" id="cOwn" min="0" max="100" step="5" value="20"></div>
+    </div>
+    <div class="calcout" id="calcOut"></div>
+  </div>
 </div>
 
 <div class="bar">
@@ -159,6 +194,7 @@ fetch('data/teams.json').then(r=>r.json()).then(d=>{
   document.getElementById('sub').textContent=`Pick exactly ${CONF.picksRequired} teams whose combined rank is ${CONF.combinedRankMin}+`;
   buildHow();
   render();
+  buildCalc();
 }).catch(()=>{document.getElementById('board').innerHTML=
   '⚠️ Could not load team data. If you opened this file directly, run a local server (<code>python3 -m http.server</code>) or use the published site.';});
 
@@ -168,18 +204,14 @@ function buildHow(){
   TEAMS.forEach(t=>{ if(!ranges[t.tier]) ranges[t.tier]={min:t.rank,max:t.rank};
     ranges[t.tier].min=Math.min(ranges[t.tier].min,t.rank); ranges[t.tier].max=Math.max(ranges[t.tier].max,t.rank); });
   const keys=Object.keys(sm).map(Number).sort((a,b)=>a-b);
-  const ramp=['#d9d3e8','#cfe0f5','#bfe6d6','#9fe9c4','#6fe9ab','#00d97a'];
-  const tierRows=keys.map((k,i)=>{const r=ranges[k]||{min:'',max:''};
-    return `<tr style="border-left-color:${ramp[Math.min(i,ramp.length-1)]}"><td class="seed">#${r.min}–${r.max}</td><td><b>${sm[k]}×</b></td></tr>`;}).join('');
+  const maxM=Math.max(...keys.map(k=>sm[k]));
+  const seedBars=keys.map(k=>{const r=ranges[k]||{min:'',max:''}; const w=Math.round(sm[k]/maxM*100);
+    return `<div class="sbrow"><div class="sblabel">#${r.min}–${r.max}</div>
+      <div class="sbtrack"><div class="sbfill" style="width:${w}%"><span>${sm[k]}×</span></div></div></div>`;}).join('');
   const obRows=ob.map((t,i)=>{const prev=i?ob[i-1].maxPct:0;
     const label=t.maxPct>=100?`more than ${prev}%`:(i===0?`${t.maxPct}% or fewer`:`${prev+1}–${t.maxPct}%`);
     const hot=t.mult>1?'class="bonusrow"':'class="norow"';
     return `<tr ${hot}><td>${label}</td><td><b>×${t.mult.toFixed(2).replace(/\.?0+$/,'')}</b></td></tr>`;}).join('');
-
-  // worked example: a real mid-seed value team
-  const ex=TEAMS.find(t=>t.name==='Norway')||TEAMS[27];
-  const exBase=2*base.gw*ex.seedMult + base.r32*ex.seedMult; // 2 group wins + win R32
-  const hi=ob[0].mult, hiPct=ob[0].maxPct;
 
   document.getElementById('rulesContent').className='';
   document.getElementById('rulesContent').innerHTML=
@@ -198,7 +230,7 @@ function buildHow(){
       <div class="step">
         <div class="sh"><span class="num">2</span> Seed multiplier</div>
         <p class="sd">Lower-seeded teams multiply <i>everything</i> they earn. The underdogs are worth more.</p>
-        <table class="mult"><thead><tr><th>Seed</th><th>×</th></tr></thead><tbody>${tierRows}</tbody></table>
+        <div class="seedbars">${seedBars}</div>
       </div>
 
       <div class="step hot">
@@ -213,14 +245,46 @@ function buildHow(){
       Two ways to multiply a result, and they stack. A <b>low seed</b> nobody else thinks of can turn a single win into a huge score — while a favorite that everyone picks earns its base value and no ownership bonus at all. The winning move isn't "pick the best teams," it's <b>find good teams other people will overlook.</b>
     </div>
 
-    <div class="ex">
-      <div class="lbl">Example — stacking both multipliers</div>
-      <b>${ex.name}</b> (seed #${ex.rank}, ${ex.seedMult}× tier) wins 2 group games and its Round of 32 match:
-      (2 × ${base.gw} + ${base.r32}) × ${ex.seedMult} = <b>${Math.round(exBase*100)/100} pts</b>.
-      If only ${hiPct}% or fewer also pick ${ex.name}, the ×${hi} ownership bonus makes that <b>${Math.round(exBase*hi*100)/100} pts</b>.
-    </div>
-
     <p class="fine"><b>Good to know:</b> a group tie = half a win · a knockout win on penalties counts as a full win (the loser gets nothing) · the 3rd-place playoff is not scored · ties in the standings split the prize slots. Seeds are locked from the ${CONF.rankingSet}.</p>`;
+}
+
+const STAGE={none:[],r16:['r32'],qf:['r32','r16'],sf:['r32','r16','qf'],final:['r32','r16','qf','sf'],champ:['r32','r16','qf','sf','final']};
+function buildCalc(){
+  const teamSel=document.getElementById('cTeam');
+  TEAMS.slice().sort((a,b)=>a.rank-b.rank).forEach(t=>teamSel.add(new Option(`#${t.rank}  ${t.name}`,t.name)));
+  const wSel=document.getElementById('cW'), dSel=document.getElementById('cD');
+  for(let i=0;i<=3;i++){ wSel.add(new Option(i,i)); dSel.add(new Option(i,i)); }
+  [['none','Out in group stage'],['r16','Made Round of 16'],['qf','Made Quarterfinal'],
+   ['sf','Made Semifinal'],['final','Made Final (runner-up)'],['champ','Won the Cup 🏆']]
+   .forEach(([v,l])=>document.getElementById('cRound').add(new Option(l,v)));
+  teamSel.value=(TEAMS.find(t=>t.name==='Norway')||TEAMS[0]).name;
+  wSel.value='2'; dSel.value='0'; document.getElementById('cRound').value='qf';
+  ['cTeam','cW','cD','cRound','cOwn'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+  calc();
+}
+function calc(){
+  const t=BYNAME[document.getElementById('cTeam').value]; if(!t) return;
+  const cW=document.getElementById('cW'), cD=document.getElementById('cD');
+  let W=+cW.value, D=+cD.value;
+  if(W+D>3){ D=3-W; cD.value=D; }           // can't exceed 3 group games
+  const L=3-W-D, round=document.getElementById('cRound').value;
+  const res={groupWins:W, groupTies:D}; STAGE[round].forEach(s=>res[s]=true);
+  const basePts=teamPoints(t,res);          // already includes the seed multiplier
+  const ownPct=+document.getElementById('cOwn').value;
+  const bonus=ownershipBonus(ownPct/100, CONF.ownershipBonus);
+  const total=Math.round(basePts*bonus*100)/100;
+  document.getElementById('cOwnV').textContent=ownPct+'%';
+  const roundLbl=document.getElementById('cRound').selectedOptions[0].text;
+  const barPct=Math.min(100, total/60*100);
+  document.getElementById('calcOut').innerHTML=
+    `<div class="cobig">${total}<small> pts</small></div>
+     <div class="cobar"><div style="width:${barPct}%"></div></div>
+     <div class="cobreak">
+       <span class="cochip">${t.name} #${t.rank} · ${t.seedMult}× seed</span>
+       <span class="cochip">${W}W ${D}D ${L}L in group</span>
+       <span class="cochip">${roundLbl}</span>
+       <span class="cochip">${ownPct}% owned · ×${(Math.round(bonus*100)/100)}</span>
+     </div>`;
 }
 
 function render(){
