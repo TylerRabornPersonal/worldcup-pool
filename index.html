@@ -87,6 +87,8 @@
   table.mult tr td{border-left:4px solid transparent}
   .ex{background:linear-gradient(120deg,#f0fff8,#eafff4);border-radius:12px;padding:12px 14px;margin-top:14px;color:var(--ink)}
   .ex .lbl{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ok);margin-bottom:4px}
+  table.mult tr.bonusrow td{color:var(--ok);filter:brightness(.85)}
+  table.mult tr.bonusrow td b{color:var(--ok);filter:brightness(.8)}
 </style>
 </head>
 <body>
@@ -145,54 +147,52 @@ fetch('data/teams.json').then(r=>r.json()).then(d=>{
   document.getElementById('rulesBox').innerHTML=
     `<h2 style="color:var(--purple)">How it works</h2>`+
     `<p style="margin:.4rem 0 0">Pick <b>${CONF.picksRequired}</b> teams. Each team's seed (1–48) must total <b>${CONF.combinedRankMin} or more</b>, so you'll need some underdogs. `+
-    `Wins = 1 pt, group ties = 0.5 pt, each multiplied by the team's stage multiplier — lower seeds pay more. `+
-    `Entry $${CONF.entryFee}. ${CONF.payout} Seeds locked from the ${CONF.rankingSet}.</p>`;
+    `Each win earns points, multiplied by the team's seed tier (lower seeds pay more) — then by an ownership bonus that rewards picking teams few others do. `+
+    `Entry $${CONF.entryFee}. ${CONF.payout} Seeds locked from the ${CONF.rankingSet}. See "How scoring works" below.</p>`;
   buildHow();
   render();
 }).catch(()=>{document.getElementById('board').innerHTML=
   '⚠️ Could not load team data. If you opened this file directly, run a local server (<code>python3 -m http.server</code>) or use the published site.';});
 
 function buildHow(){
-  // derive the tier table straight from teams.json so it always matches the data
-  const tiers={};
-  TEAMS.forEach(t=>{
-    const k=t.tier;
-    if(!tiers[k]) tiers[k]={min:t.rank,max:t.rank,mult:t.mult};
-    tiers[k].min=Math.min(tiers[k].min,t.rank); tiers[k].max=Math.max(tiers[k].max,t.rank);
-  });
-  const keys=Object.keys(tiers).map(Number).sort((a,b)=>a-b);
-  // colour ramp from soft (top seeds) to vivid green (underdogs)
-  const ramp=['#d9d3e8','#bfe6d6','#9fe9c4','#6fe9ab','#3fe592','#00d97a'];
-  const rows=keys.map((k,i)=>{
-    const tr=tiers[k], m=tr.mult, c=ramp[Math.min(i,ramp.length-1)];
-    return `<tr style="border-left-color:${c}"><td class="seed">#${tr.min}–${tr.max}</td>
-      <td>${m.gw}×</td><td>${m.r32}×</td><td>${m.r16}×</td><td>${m.qf}×</td><td>${m.sf}×</td><td>${m.final}×</td></tr>`;
-  }).join('');
+  const base=CONF.baseValues, sm=CONF.seedMultByTier, ob=CONF.ownershipBonus;
+  // seed range per tier (from the data, so it always matches)
+  const ranges={};
+  TEAMS.forEach(t=>{ if(!ranges[t.tier]) ranges[t.tier]={min:t.rank,max:t.rank};
+    ranges[t.tier].min=Math.min(ranges[t.tier].min,t.rank); ranges[t.tier].max=Math.max(ranges[t.tier].max,t.rank); });
+  const keys=Object.keys(sm).map(Number).sort((a,b)=>a-b);
+  const ramp=['#d9d3e8','#cfe0f5','#bfe6d6','#9fe9c4','#6fe9ab','#00d97a'];
+  const tierRows=keys.map((k,i)=>{const r=ranges[k]||{min:'',max:''};
+    return `<tr style="border-left-color:${ramp[Math.min(i,ramp.length-1)]}"><td class="seed">#${r.min}–${r.max}</td><td><b>${sm[k]}×</b></td></tr>`;}).join('');
+  const obRows=ob.map((t,i)=>{const prev=i?ob[i-1].maxPct:0;
+    const label=t.maxPct>=100?`more than ${prev}%`:(i===0?`≤ ${t.maxPct}%`:`${prev+1}–${t.maxPct}%`);
+    const hot=t.mult>1?'class="bonusrow"':'';
+    return `<tr ${hot}><td>${label} of entrants pick it</td><td><b>×${t.mult}</b></td></tr>`;}).join('');
 
-  // worked examples using a real top seed and a real bottom seed
-  const top=TEAMS[0], low=TEAMS[TEAMS.length-1];
-  const lowPts = (2*low.mult.gw + low.mult.r32);
-  const topPts = (2*top.mult.gw + top.mult.r32);
+  // worked example: a real mid-seed value team
+  const ex=TEAMS.find(t=>t.name==='Norway')||TEAMS[27];
+  const exBase=2*base.gw*ex.seedMult + base.r32*ex.seedMult; // 2 group wins + win R32
+  const hi=ob[0].mult;
 
   document.getElementById('howInner').innerHTML=
-    `<p style="margin:0 0 10px">Every match your team plays earns points, then that team's <b>stage multiplier</b> scales it. The catch: <b>the lower a team's seed, the bigger its multipliers</b> — so a deep run by an underdog is worth far more than the same run by a favorite. That's the whole reason for the combined-rank rule.</p>
-     <div class="scorebox">
-       <div class="s"><div class="big">1 pt</div>base for a win (group or knockout)</div>
-       <div class="s"><div class="big">0.5 pt</div>base for a group-stage tie</div>
-       <div class="s"><div class="big">× mult</div>by the team's seed tier &amp; the stage</div>
-     </div>
-     <p style="margin:0 0 6px"><b>Multiplier by seed tier and stage</b> (Grp = each group win/tie; then each knockout win):</p>
+    `<p style="margin:0 0 10px">Three things decide a team's points: <b>which games it wins</b>, <b>how low its seed is</b>, and <b>how few people picked it</b>. Each win earns a base value, multiplied by the team's seed-tier multiplier, and then the team's whole total gets an ownership bonus.</p>
+     <p style="margin:0 0 6px"><b>1. Base value per result</b> — the deeper the round, the more it's worth:</p>
      <div style="overflow-x:auto"><table class="mult">
-       <thead><tr><th>Seed</th><th>Grp W/T</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
-       <tbody>${rows}</tbody></table></div>
-     <p style="margin:10px 0 0;font-size:.84rem">A win and a tie in the group stage use the same multiplier (the "Grp W/T" column); you just earn the 1-pt or 0.5-pt base before multiplying.</p>
-     <div class="ex">
-       <div class="lbl">Example — the underdog payoff</div>
-       <b>${low.name}</b> (seed #${low.rank}) wins 2 group games and then wins its Round of 32 match:
-       2 × ${low.mult.gw} + ${low.mult.r32} = <b>${Math.round(lowPts*100)/100} pts</b>.<br>
-       <b>${top.name}</b> (seed #${top.rank}) doing the exact same thing: 2 × ${top.mult.gw} + ${top.mult.r32} = <b>${Math.round(topPts*100)/100} pts</b>.
+       <thead><tr><th>Grp win</th><th>Grp tie</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th></tr></thead>
+       <tbody><tr><td>${base.gw}</td><td>${base.gt}</td><td>${base.r32}</td><td>${base.r16}</td><td>${base.qf}</td><td>${base.sf}</td><td>${base.final}</td></tr></tbody></table></div>
+     <p style="margin:12px 0 6px"><b>2. Seed-tier multiplier</b> — lower seeds multiply every result they earn:</p>
+     <div style="display:flex;gap:18px;flex-wrap:wrap">
+       <table class="mult" style="flex:1;min-width:200px"><thead><tr><th>Seed</th><th>Multiplier</th></tr></thead><tbody>${tierRows}</tbody></table>
+       <table class="mult" style="flex:1;min-width:200px"><thead><tr><th>Ownership bonus</th><th>×</th></tr></thead><tbody>${obRows}</tbody></table>
      </div>
-     <p style="margin:12px 0 0;font-size:.84rem"><b>Two rules worth knowing:</b> a knockout win on penalties counts as a full win (the loser gets nothing), and the 3rd-place playoff is not scored.</p>`;
+     <p style="margin:12px 0 6px"><b>3. Ownership bonus</b> — set when picks lock: the fewer entrants who picked a team, the bigger the bonus on its <i>whole</i> tournament total. Find a gem nobody else spots and it pays double.</p>
+     <div class="ex">
+       <div class="lbl">Example — seed + ownership stacking</div>
+       <b>${ex.name}</b> (seed #${ex.rank}, ${ex.seedMult}× tier) wins 2 group games and its Round of 32 match:
+       (2 × ${base.gw} + ${base.r32}) × ${ex.seedMult} = <b>${Math.round(exBase*100)/100} pts</b>.<br>
+       If ≤${ob[0].maxPct}% of entrants also picked ${ex.name}, that becomes ×${hi} = <b>${Math.round(exBase*hi*100)/100} pts</b>.
+     </div>
+     <p style="margin:12px 0 0;font-size:.84rem"><b>Also:</b> group tie = half a win; a knockout win on penalties counts as a full win (loser gets nothing); the 3rd-place playoff is not scored.</p>`;
 }
 
 function render(){
