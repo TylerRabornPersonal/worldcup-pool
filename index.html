@@ -115,6 +115,12 @@
   .valuetip .vt-h{font-weight:800;color:#b9770a;margin-bottom:4px}
   .valuetip b{color:#3d3112}
   .rulesfull .fine{margin:14px 0 0;font-size:.8rem;color:var(--mut);line-height:1.6}
+  .payouts{margin:16px 0 0;background:#faf8ff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .payouts .po-h{font-weight:800;color:var(--purple);margin-bottom:8px}
+  .payouts .po-sub{font-weight:600;color:var(--mut);font-size:.82rem}
+  .payouts table.mult td:first-child{font-weight:700}
+  .payouts .po-note{margin:8px 0 0;font-size:.84rem;color:var(--mut)}
+  .payouts .po-note b{color:var(--ink)}
   /* points calculator */
   .calcsub{color:var(--mut);font-size:.9rem;margin:.3rem 0 14px}
   .calcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
@@ -213,6 +219,7 @@ function buildHow(){
     const hot=t.mult>1?'class="bonusrow"':'class="norow"';
     return `<tr ${hot}><td>${label}</td><td><b>×${t.mult.toFixed(2).replace(/\.?0+$/,'')}</b></td></tr>`;}).join('');
 
+  const fee=CONF.entryFee, egN=10, egRem=fee*egN-2*fee, p1=egRem*0.75, p2=egRem*0.25;
   document.getElementById('rulesContent').className='';
   document.getElementById('rulesContent').innerHTML=
    `<h2 class="rh">How the game works</h2>
@@ -243,6 +250,17 @@ function buildHow(){
     <div class="valuetip">
       <div class="vt-h">💡 Where the value is</div>
       Two ways to multiply a result, and they stack. A <b>low seed</b> nobody else thinks of can turn a single win into a huge score — while a favorite that everyone picks earns its base value and no ownership bonus at all. The winning move isn't "pick the best teams," it's <b>find good teams other people will overlook.</b>
+    </div>
+
+    <div class="payouts">
+      <div class="po-h">💰 Payouts <span class="po-sub">example: ${egN} entrants · $${fee*egN} pool</span></div>
+      <table class="mult"><thead><tr><th>Place</th><th>Wins</th></tr></thead><tbody>
+        <tr><td>🥇 1st</td><td><b>$${Math.round(p1)}</b> — 75% of the pool after refunds</td></tr>
+        <tr><td>🥈 2nd</td><td><b>$${Math.round(p2)}</b> — 25% after refunds</td></tr>
+        <tr><td>🥉 3rd</td><td><b>$${fee}</b> — entry back</td></tr>
+        <tr><td>🪦 Last</td><td><b>$${fee}</b> — entry back</td></tr>
+      </tbody></table>
+      <p class="po-note">Entry is <b>$${fee}</b>. 3rd place and last place get their money back; 1st and 2nd split everything left over, 75/25. The more people enter, the bigger 1st and 2nd get.</p>
     </div>
 
     <p class="fine"><b>Good to know:</b> a group tie = half a win · a knockout win on penalties counts as a full win (the loser gets nothing) · the 3rd-place playoff is not scored · ties in the standings split the prize slots. Seeds are locked from the ${CONF.rankingSet}.</p>`;
