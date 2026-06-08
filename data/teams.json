@@ -1,13 +1,13 @@
 {
   "config": {
     "season": "2026 FIFA World Cup",
-    "entryFee": 10,
+    "entryFee": 25,
     "picksRequired": 6,
     "combinedRankMin": 72,
     "rankingSet": "FIFA/Coca-Cola Men's World Ranking, 1 April 2026",
     "submitEmail": "tylerraborn@gmail.com",
     "deadline": "2026-06-11T00:00:00",
-    "payout": "1st: 75% of pool less $10 | 2nd: 25% less $10 | 3rd: $10 (top ~20% paid; admin adds slots if pool > 15).",
+    "payout": "3rd place and last place get their $25 entry back; 1st takes 75% and 2nd takes 25% of the remaining pool.",
     "rules": {
       "win": 1.0,
       "groupTie": 0.5,
@@ -55,7 +55,15 @@
         "maxPct": 100,
         "mult": 1.0
       }
-    ]
+    ],
+    "payoutModel": {
+      "refundPlaces": [
+        "3rd",
+        "last"
+      ],
+      "firstPct": 0.75,
+      "secondPct": 0.25
+    }
   },
   "teams": [
     {
