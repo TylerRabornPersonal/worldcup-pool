@@ -82,6 +82,15 @@
   table.picks .bn{font-weight:800;color:var(--mut)}
   table.picks .bn.hot{color:var(--ok);filter:brightness(.82)}
   table.picks tbody tr:nth-child(even){background:#faf9fc}
+  table.grid6{table-layout:fixed;min-width:840px}
+  table.grid6 th:first-child,table.grid6 td.rk{width:30px}
+  table.grid6 th:nth-child(2),table.grid6 td.pl{width:130px}
+  table.grid6 th:last-child,table.grid6 td.tot2{width:64px}
+  td.pcell{border-left:1px solid var(--line)}
+  td.pcell .tn{display:block;font-weight:600;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  td.pcell .tp{display:block;color:var(--purple);font-weight:800;font-variant-numeric:tabular-nums;font-size:.82rem;margin-top:2px}
+  td.pcell .tp i{font-style:normal;color:var(--ok);filter:brightness(.8);font-weight:800;font-size:.72rem}
+  td.pcell.hot{background:#f1fff8}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
 </style>
 </head>
@@ -147,7 +156,8 @@ Promise.all([
   if(!rows.length){board.innerHTML='<div class="load">No entries yet — they appear here once picks are submitted.</div>';}
   rows.forEach(r=>{
     const div=document.createElement('div'); div.className='row'+(r.place<=3?(' p'+r.place):'');
-    const pz=prizes[r.player]?` · <span class="pz">$${prizes[r.player].toFixed(2)}</span>`:'';
+    const cardChips=r.teams.slice().sort((a,b)=>a.rank-b.rank).map(t=>
+      `<span class="pchip${t.bonus>1?' hot':''}">${t.team} <b>${t.points}</b></span>`).join('');
     const teamRows=r.teams.map(t=>{const b=t.breakdown||{};
       const bz=t.bonus>1?`<span class="bonus">×${t.bonus}</span>`:`×${t.bonus}`;
       return `<tr class="trow"><td>${t.team} <span class="seed">#${t.rank}</span></td>
@@ -157,8 +167,8 @@ Promise.all([
         <td class="t"><b>${t.points}</b></td></tr>`;}).join('');
     div.innerHTML=
       `<div class="head"><div class="place">${r.place}</div>
-        <div class="who"><div class="nm">${r.player}</div><div class="meta">${r.teams.length} teams${pz}</div></div>
-        <div class="tot"><b>${r.total.toFixed(1)}</b><small>pts</small></div>${CARET}</div>
+        <div class="who"><div class="nm">${r.player}</div><div class="meta chips">${cardChips}</div></div>
+        <div class="tot"><b>${r.total.toFixed(1)}</b><small>pts</small></div>${CARET}</div>`+`
        <div class="detail"><table>
         <tr><th>Team</th><th>Grp</th><th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Fin</th><th>Own</th><th>Bonus</th><th>Pts</th></tr>
         ${teamRows}</table></div>`;
@@ -166,11 +176,13 @@ Promise.all([
     board.appendChild(div);
   });
   // ---- TABLE 1: all picks at a glance (sorted by total) ----
-  let pt='<table class="picks"><thead><tr><th>#</th><th>Player</th><th>Picks — points so far</th><th>Total</th></tr></thead><tbody>';
+  let pt='<table class="picks grid6"><thead><tr><th>#</th><th>Player</th>'+
+    '<th>Pick 1</th><th>Pick 2</th><th>Pick 3</th><th>Pick 4</th><th>Pick 5</th><th>Pick 6</th><th>Total</th></tr></thead><tbody>';
   rows.forEach(r=>{
-    const chips=r.teams.slice().sort((a,b)=>b.points-a.points).map(t=>
-      `<span class="pchip${t.bonus>1?' hot':''}">${t.team} <b>${t.points}</b>${t.bonus>1?` <i>×${t.bonus}</i>`:''}</span>`).join('');
-    pt+=`<tr><td class="rk">${r.place}</td><td class="pl">${r.player}</td><td class="chips">${chips}</td><td class="tot2">${r.total.toFixed(1)}</td></tr>`;
+    const cells=r.teams.slice().sort((a,b)=>a.rank-b.rank).map(t=>
+      `<td class="pcell${t.bonus>1?' hot':''}"><span class="tn">${t.team}</span>`+
+      `<span class="tp">${t.points}${t.bonus>1?` <i>×${t.bonus}</i>`:''}</span></td>`).join('');
+    pt+=`<tr><td class="rk">${r.place}</td><td class="pl">${r.player}</td>${cells}<td class="tot2">${r.total.toFixed(1)}</td></tr>`;
   });
   pt+='</tbody></table>';
   document.getElementById('picksTable').innerHTML=rows.length?pt:'<div class="load">No entries yet.</div>';
