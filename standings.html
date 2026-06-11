@@ -65,6 +65,23 @@
   .paystrip{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
     padding:11px 14px;margin:0 0 12px;font-size:.9rem;color:var(--purple);text-align:center}
   .paystrip .ps-note{color:var(--mut);font-weight:400;font-size:.82rem}
+  .sec{margin:26px 0 4px;font-size:1.15rem;color:var(--purple)}
+  .secsub{margin:0 0 10px;color:var(--mut);font-size:.85rem}
+  .tablewrap{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow-x:auto}
+  table.picks{width:100%;border-collapse:collapse;font-size:.9rem}
+  table.picks th{background:var(--purple);color:#fff;text-align:left;padding:10px 12px;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0}
+  table.picks td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
+  table.picks .rk{font-weight:800;color:var(--purple);width:34px;text-align:center}
+  table.picks .pl{font-weight:700;white-space:nowrap}
+  table.picks .tot2{font-weight:800;font-variant-numeric:tabular-nums;text-align:right;color:var(--purple);font-size:1.05rem}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .pchip{display:inline-flex;align-items:center;gap:5px;background:#f1eef7;border-radius:999px;padding:3px 10px;font-size:.82rem;white-space:nowrap}
+  .pchip b{font-variant-numeric:tabular-nums;color:var(--purple)}
+  .pchip.hot{background:#e8fff4}.pchip.hot i{font-style:normal;font-weight:800;color:var(--ok);filter:brightness(.8);font-size:.75rem}
+  table.picks.own td{white-space:nowrap}
+  table.picks .bn{font-weight:800;color:var(--mut)}
+  table.picks .bn.hot{color:var(--ok);filter:brightness(.82)}
+  table.picks tbody tr:nth-child(even){background:#faf9fc}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
 </style>
 </head>
@@ -82,6 +99,14 @@
   <div class="tiles" id="tiles"></div>
   <div class="paystrip" id="paystrip"></div>
   <div id="board" class="load">Loading standings…</div>
+
+  <h2 class="sec">📋 All picks at a glance</h2>
+  <div id="picksTable" class="tablewrap"></div>
+
+  <h2 class="sec">👥 Team ownership &amp; bonus</h2>
+  <p class="secsub">Locked when picks closed. The fewer entrants on a team, the bigger its season-long multiplier.</p>
+  <div id="ownTable" class="tablewrap"></div>
+
   <div class="meta-foot" id="meta"></div>
 </div>
 
@@ -140,7 +165,29 @@ Promise.all([
     div.querySelector('.head').addEventListener('click',()=>div.classList.toggle('open'));
     board.appendChild(div);
   });
-  document.getElementById('meta').innerHTML='Results last updated: '+(rd.lastUpdated||'—')+' · tap any row for team-by-team points · <b>Own</b> = % of entrants who picked that team, <b>Bonus</b> = ownership reward (≤10% owned ×2, ≤25% ×1.5, ≤50% ×1.25)';
+  // ---- TABLE 1: all picks at a glance (sorted by total) ----
+  let pt='<table class="picks"><thead><tr><th>#</th><th>Player</th><th>Picks — points so far</th><th>Total</th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    const chips=r.teams.slice().sort((a,b)=>b.points-a.points).map(t=>
+      `<span class="pchip${t.bonus>1?' hot':''}">${t.team} <b>${t.points}</b>${t.bonus>1?` <i>×${t.bonus}</i>`:''}</span>`).join('');
+    pt+=`<tr><td class="rk">${r.place}</td><td class="pl">${r.player}</td><td class="chips">${chips}</td><td class="tot2">${r.total.toFixed(1)}</td></tr>`;
+  });
+  pt+='</tbody></table>';
+  document.getElementById('picksTable').innerHTML=rows.length?pt:'<div class="load">No entries yet.</div>';
+
+  // ---- TABLE 2: team ownership & bonus ----
+  const own=computeOwnership(entries), byName={}; TEAMS.forEach(t=>byName[t.name]=t);
+  const owned=Object.keys(own.count).map(name=>({name,seed:byName[name]?byName[name].rank:'',
+    count:own.count[name],pct:Math.round(own.frac[name]*100),
+    bonus:ownershipBonus(own.frac[name],CONF.ownershipBonus)}));
+  owned.sort((a,b)=>b.count-a.count || a.seed-b.seed);
+  let ot='<table class="picks own"><thead><tr><th>Team</th><th>Seed</th><th>Picked by</th><th>Owned</th><th>Bonus</th></tr></thead><tbody>';
+  owned.forEach(o=>{ot+=`<tr><td class="pl">${o.name}</td><td>#${o.seed}</td><td>${o.count} / ${own.entrants}</td><td>${o.pct}%</td>`+
+    `<td class="${o.bonus>1?'bn hot':'bn'}">×${o.bonus}</td></tr>`;});
+  ot+='</tbody></table>';
+  document.getElementById('ownTable').innerHTML=ot;
+
+  document.getElementById('meta').innerHTML='Results last updated: '+(rd.lastUpdated||'—')+' · tap any ranked row for team-by-team stage points · points fill in as games finish';
 }).catch(()=>{document.getElementById('board').innerHTML=
   '<div class="load">⚠️ Could not load data. View on the published site, or run a local server (<code>python3 -m http.server</code>).</div>';});
 </script>
