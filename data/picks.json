@@ -1,16 +1,173 @@
 {
-  "locked": false,
+  "locked": true,
+  "entrants": 14,
   "entries": [
     {
-      "player": "EXAMPLE - delete me",
-      "email": "x@y.com",
+      "player": "Brad Hollinger",
+      "email": "",
+      "teams": [
+        "USA",
+        "Germany",
+        "Japan",
+        "Egypt",
+        "Spain",
+        "England"
+      ]
+    },
+    {
+      "player": "Jonathan Josey",
+      "email": "josey72488@gmail.com",
+      "teams": [
+        "England",
+        "Brazil",
+        "Netherlands",
+        "Belgium",
+        "South Korea",
+        "Norway"
+      ]
+    },
+    {
+      "player": "Derrick Robertson",
+      "email": "derrickr0512@gmail.com",
+      "teams": [
+        "Spain",
+        "England",
+        "Germany",
+        "Mexico",
+        "Switzerland",
+        "Australia"
+      ]
+    },
+    {
+      "player": "Bobby Crosland",
+      "email": "bobby.crosland@gmail.com",
+      "teams": [
+        "Argentina",
+        "Portugal",
+        "Brazil",
+        "Mexico",
+        "Japan",
+        "Canada"
+      ]
+    },
+    {
+      "player": "Tyler Raborn",
+      "email": "tylerraborn@gmail.com",
+      "teams": [
+        "Spain",
+        "England",
+        "Netherlands",
+        "Belgium",
+        "Turkey",
+        "Czechia"
+      ]
+    },
+    {
+      "player": "Jason Coats",
+      "email": "jcoats1124@gmail.com",
+      "teams": [
+        "Brazil",
+        "Netherlands",
+        "Germany",
+        "USA",
+        "Uruguay",
+        "Switzerland"
+      ]
+    },
+    {
+      "player": "Spencer Boothe",
+      "email": "spencerkboothe@gmail.com",
       "teams": [
         "France",
-        "Brazil",
-        "Croatia",
-        "Norway",
-        "Czechia",
+        "Spain",
+        "Uruguay",
+        "Japan",
+        "Canada",
         "Ghana"
+      ]
+    },
+    {
+      "player": "Blake Jeter",
+      "email": "blakejeter@gmail.com",
+      "teams": [
+        "Spain",
+        "Belgium",
+        "Colombia",
+        "Japan",
+        "South Korea",
+        "Norway"
+      ]
+    },
+    {
+      "player": "Will Rackley",
+      "email": "wmr546@gmail.com",
+      "teams": [
+        "France",
+        "England",
+        "Belgium",
+        "Switzerland",
+        "Algeria",
+        "Cote d'Ivoire"
+      ]
+    },
+    {
+      "player": "Dylan White",
+      "email": "dylanswhite@gmail.com",
+      "teams": [
+        "Spain",
+        "England",
+        "Netherlands",
+        "Uruguay",
+        "Ecuador",
+        "South Korea"
+      ]
+    },
+    {
+      "player": "Brett Jeter",
+      "email": "brettjeter@gmail.com",
+      "teams": [
+        "Morocco",
+        "Senegal",
+        "USA",
+        "Japan",
+        "Ecuador",
+        "Saudi Arabia"
+      ]
+    },
+    {
+      "player": "Will Mcbeath",
+      "email": "willmcbeath@yahoo.com",
+      "teams": [
+        "France",
+        "Spain",
+        "Netherlands",
+        "Belgium",
+        "USA",
+        "Ghana"
+      ]
+    },
+    {
+      "player": "Zachary Golson",
+      "email": "zacharyjoe.golson@gmail.com",
+      "teams": [
+        "France",
+        "Portugal",
+        "Brazil",
+        "Mexico",
+        "USA",
+        "Paraguay"
+      ]
+    },
+    {
+      "player": "Matt Norwood",
+      "email": "",
+      "teams": [
+        "Spain",
+        "Belgium",
+        "Colombia",
+        "Uruguay",
+        "Ecuador",
+        "Cote d'Ivoire"
       ]
     }
   ]
