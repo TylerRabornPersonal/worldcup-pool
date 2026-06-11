@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-07",
+  "lastUpdated": "2026-06-11",
   "teams": {
     "France": {
       "groupWins": 0,
@@ -119,7 +119,7 @@
       "final": false
     },
     "Mexico": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
