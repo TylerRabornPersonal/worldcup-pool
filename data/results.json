@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-11",
+  "lastUpdated": "2026-06-12",
   "teams": {
     "France": {
       "groupWins": 0,
@@ -200,7 +200,7 @@
       "final": false
     },
     "South Korea": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
