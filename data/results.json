@@ -1,50 +1,13 @@
 {
-  "lastUpdated": "2026-06-12",
+  "lastUpdated": "2026-06-13",
   "teams": {
-    "Mexico": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "South Korea": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "USA": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Canada": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Bosnia & Herzegovina": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    }
+    "Mexico":                 { "groupWins": 1, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "South Africa":           { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "South Korea":            { "groupWins": 1, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "Czechia":                { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "Canada":                 { "groupWins": 0, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "Bosnia & Herzegovina":   { "groupWins": 0, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "USA":                    { "groupWins": 1, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false },
+    "Paraguay":               { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false }
   }
 }
