@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-14",
+  "lastUpdated": "2026-06-15",
   "teams": {
     "France": {
       "groupWins": 0,
@@ -263,7 +263,7 @@
       "final": false
     },
     "Cote d'Ivoire": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -272,7 +272,7 @@
       "final": false
     },
     "Sweden": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
