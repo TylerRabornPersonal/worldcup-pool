@@ -165,7 +165,7 @@
     },
     "Iran": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -426,7 +426,7 @@
     },
     "New Zealand": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
