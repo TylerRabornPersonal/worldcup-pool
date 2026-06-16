@@ -12,7 +12,7 @@
     },
     "Spain": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -75,7 +75,7 @@
     },
     "Belgium": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -138,7 +138,7 @@
     },
     "Uruguay": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -228,7 +228,7 @@
     },
     "Egypt": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -363,7 +363,7 @@
     },
     "Saudi Arabia": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -390,7 +390,7 @@
     },
     "Cape Verde": {
       "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
