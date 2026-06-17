@@ -1,8 +1,8 @@
 {
   "lastUpdated": "2026-06-17",
   "teams": {
-    "Mexico": {
-      "groupWins": 1,
+    "Algeria": {
+      "groupWins": 0,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -10,25 +10,7 @@
       "sf": false,
       "final": false
     },
-    "South Korea": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Scotland": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "USA": {
+    "Argentina": {
       "groupWins": 1,
       "groupTies": 0,
       "r32": false,
@@ -46,60 +28,6 @@
       "sf": false,
       "final": false
     },
-    "Germany": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Cote d'Ivoire": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Sweden": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "France": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Norway": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Argentina": {
-      "groupWins": 1,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
     "Austria": {
       "groupWins": 1,
       "groupTies": 0,
@@ -109,7 +37,7 @@
       "sf": false,
       "final": false
     },
-    "Canada": {
+    "Belgium": {
       "groupWins": 0,
       "groupTies": 1,
       "r32": false,
@@ -127,27 +55,171 @@
       "sf": false,
       "final": false
     },
-    "Qatar": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Switzerland": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
     "Brazil": {
       "groupWins": 0,
       "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Canada": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Cape Verde": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Cote d'Ivoire": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Croatia": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Curacao": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Czechia": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "DR Congo": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Ecuador": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Egypt": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "England": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "France": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Germany": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Haiti": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Iran": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Iraq": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Japan": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Jordan": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Mexico": {
+      "groupWins": 1,
+      "groupTies": 0,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -172,42 +244,6 @@
       "sf": false,
       "final": false
     },
-    "Japan": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Belgium": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Egypt": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Iran": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
     "New Zealand": {
       "groupWins": 0,
       "groupTies": 1,
@@ -217,7 +253,25 @@
       "sf": false,
       "final": false
     },
-    "Spain": {
+    "Norway": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Paraguay": {
+      "groupWins": 0,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Portugal": {
       "groupWins": 0,
       "groupTies": 1,
       "r32": false,
@@ -226,7 +280,7 @@
       "sf": false,
       "final": false
     },
-    "Cape Verde": {
+    "Qatar": {
       "groupWins": 0,
       "groupTies": 1,
       "r32": false,
@@ -244,9 +298,18 @@
       "sf": false,
       "final": false
     },
-    "Uruguay": {
+    "Scotland": {
+      "groupWins": 1,
+      "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Senegal": {
       "groupWins": 0,
-      "groupTies": 1,
+      "groupTies": 0,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -262,8 +325,8 @@
       "sf": false,
       "final": false
     },
-    "Czechia": {
-      "groupWins": 0,
+    "South Korea": {
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -271,8 +334,17 @@
       "sf": false,
       "final": false
     },
-    "Haiti": {
+    "Spain": {
       "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Sweden": {
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -280,7 +352,16 @@
       "sf": false,
       "final": false
     },
-    "Paraguay": {
+    "Switzerland": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "Tunisia": {
       "groupWins": 0,
       "groupTies": 0,
       "r32": false,
@@ -298,8 +379,8 @@
       "sf": false,
       "final": false
     },
-    "Curacao": {
-      "groupWins": 0,
+    "USA": {
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -307,54 +388,9 @@
       "sf": false,
       "final": false
     },
-    "Ecuador": {
+    "Uruguay": {
       "groupWins": 0,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Tunisia": {
-      "groupWins": 0,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Senegal": {
-      "groupWins": 0,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Iraq": {
-      "groupWins": 0,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Algeria": {
-      "groupWins": 0,
-      "groupTies": 0,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Jordan": {
-      "groupWins": 0,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
