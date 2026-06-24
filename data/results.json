@@ -19,18 +19,18 @@
       "sf": false,
       "final": false
     },
-    "Czechia": {
-      "groupWins": 0,
-      "groupTies": 1,
+    "South Korea": {
+      "groupWins": 1,
+      "groupTies": 0,
       "r32": false,
       "r16": false,
       "qf": false,
       "sf": false,
       "final": false
     },
-    "South Korea": {
-      "groupWins": 1,
-      "groupTies": 0,
+    "Czechia": {
+      "groupWins": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -154,6 +154,15 @@
       "sf": false,
       "final": false
     },
+    "Curacao": {
+      "groupWins": 0,
+      "groupTies": 1,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
     "Cote d'Ivoire": {
       "groupWins": 1,
       "groupTies": 0,
@@ -164,15 +173,6 @@
       "final": false
     },
     "Ecuador": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "Curacao": {
       "groupWins": 0,
       "groupTies": 1,
       "r32": false,
@@ -307,8 +307,8 @@
       "sf": false,
       "final": false
     },
-    "Iraq": {
-      "groupWins": 0,
+    "Norway": {
+      "groupWins": 2,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -316,8 +316,8 @@
       "sf": false,
       "final": false
     },
-    "Norway": {
-      "groupWins": 2,
+    "Iraq": {
+      "groupWins": 0,
       "groupTies": 0,
       "r32": false,
       "r16": false,
@@ -370,18 +370,18 @@
       "sf": false,
       "final": false
     },
-    "Colombia": {
-      "groupWins": 2,
-      "groupTies": 0,
+    "DR Congo": {
+      "groupWins": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
       "sf": false,
       "final": false
     },
-    "DR Congo": {
-      "groupWins": 0,
-      "groupTies": 1,
+    "Colombia": {
+      "groupWins": 2,
+      "groupTies": 0,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -417,7 +417,7 @@
     },
     "Ghana": {
       "groupWins": 1,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
