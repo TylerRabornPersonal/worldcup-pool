@@ -371,7 +371,7 @@
       "final": false
     },
     "Portugal": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 1,
       "r32": false,
       "r16": false,
@@ -399,7 +399,7 @@
     },
     "England": {
       "groupWins": 1,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -408,7 +408,7 @@
     },
     "Ghana": {
       "groupWins": 1,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -425,7 +425,7 @@
       "final": false
     },
     "Croatia": {
-      "groupWins": 0,
+      "groupWins": 1,
       "groupTies": 0,
       "r32": false,
       "r16": false,
