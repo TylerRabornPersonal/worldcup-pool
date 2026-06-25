@@ -2,8 +2,17 @@
   "lastUpdated": "2026-06-24",
   "teams": {
     "Mexico": {
-      "groupWins": 2,
+      "groupWins": 3,
       "groupTies": 0,
+      "r32": false,
+      "r16": false,
+      "qf": false,
+      "sf": false,
+      "final": false
+    },
+    "South Africa": {
+      "groupWins": 1,
+      "groupTies": 1,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -20,15 +29,6 @@
       "final": false
     },
     "Czechia": {
-      "groupWins": 0,
-      "groupTies": 1,
-      "r32": false,
-      "r16": false,
-      "qf": false,
-      "sf": false,
-      "final": false
-    },
-    "South Africa": {
       "groupWins": 0,
       "groupTies": 1,
       "r32": false,
