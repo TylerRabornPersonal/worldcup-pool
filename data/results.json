@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-26",
+  "lastUpdated": "2026-06-27",
   "teams": {
     "France": {
       "groupWins": 3,
@@ -11,7 +11,7 @@
       "final": false
     },
     "Spain": {
-      "groupWins": 1,
+      "groupWins": 2,
       "groupTies": 1,
       "r32": false,
       "r16": false,
@@ -363,7 +363,7 @@
     },
     "Saudi Arabia": {
       "groupWins": 0,
-      "groupTies": 1,
+      "groupTies": 2,
       "r32": false,
       "r16": false,
       "qf": false,
@@ -390,7 +390,7 @@
     },
     "Cape Verde": {
       "groupWins": 0,
-      "groupTies": 2,
+      "groupTies": 3,
       "r32": false,
       "r16": false,
       "qf": false,
