@@ -91,6 +91,14 @@
   td.pcell .tp{display:block;color:var(--purple);font-weight:800;font-variant-numeric:tabular-nums;font-size:.82rem;margin-top:2px}
   td.pcell .tp i{font-style:normal;color:var(--ok);filter:brightness(.8);font-weight:800;font-size:.72rem}
   td.pcell.hot{background:#f1fff8}
+  /* eliminated teams = red */
+  .pchip.out{background:#fcebeb;color:#791f1f}
+  .pchip.out b{color:#a32d2d}
+  td.pcell.out{background:#fcebeb}
+  td.pcell.out .tn,td.pcell.out .tp{color:#a32d2d}
+  td.pcell.out .tp .x{font-style:normal;font-weight:800;color:#a32d2d;text-transform:uppercase;font-size:.68rem}
+  table.picks tr.outrow .pl{color:#a32d2d}
+  .outtag{font-size:.66rem;font-weight:800;text-transform:uppercase;color:#fff;background:#c0392b;padding:1px 6px;border-radius:999px;vertical-align:middle}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
 </style>
 </head>
@@ -157,7 +165,7 @@ Promise.all([
   rows.forEach(r=>{
     const div=document.createElement('div'); div.className='row'+(r.place<=3?(' p'+r.place):'');
     const cardChips=r.teams.slice().sort((a,b)=>a.rank-b.rank).map(t=>
-      `<span class="pchip${t.bonus>1?' hot':''}">${t.team} <b>${t.points}</b></span>`).join('');
+      `<span class="pchip${t.eliminated?' out':t.bonus>1?' hot':''}">${t.team} <b>${t.points}</b></span>`).join('');
     const teamRows=r.teams.map(t=>{const b=t.breakdown||{};
       const bz=t.bonus>1?`<span class="bonus">×${t.bonus}</span>`:`×${t.bonus}`;
       return `<tr class="trow"><td>${t.team} <span class="seed">#${t.rank}</span></td>
@@ -180,8 +188,8 @@ Promise.all([
     '<th>Pick 1</th><th>Pick 2</th><th>Pick 3</th><th>Pick 4</th><th>Pick 5</th><th>Pick 6</th><th>Total</th></tr></thead><tbody>';
   rows.forEach(r=>{
     const cells=r.teams.slice().sort((a,b)=>a.rank-b.rank).map(t=>
-      `<td class="pcell${t.bonus>1?' hot':''}"><span class="tn">${t.team}</span>`+
-      `<span class="tp">${t.points}${t.bonus>1?` <i>×${t.bonus}</i>`:''}</span></td>`).join('');
+      `<td class="pcell${t.eliminated?' out':t.bonus>1?' hot':''}"><span class="tn">${t.team}</span>`+
+      `<span class="tp">${t.points}${t.eliminated?' <i class="x">out</i>':t.bonus>1?` <i>×${t.bonus}</i>`:''}</span></td>`).join('');
     pt+=`<tr><td class="rk">${r.place}</td><td class="pl">${r.player}</td>${cells}<td class="tot2">${r.total.toFixed(1)}</td></tr>`;
   });
   pt+='</tbody></table>';
@@ -191,10 +199,11 @@ Promise.all([
   const own=computeOwnership(entries), byName={}; TEAMS.forEach(t=>byName[t.name]=t);
   const owned=Object.keys(own.count).map(name=>({name,seed:byName[name]?byName[name].rank:'',
     count:own.count[name],pct:Math.round(own.frac[name]*100),
-    bonus:ownershipBonus(own.frac[name],CONF.ownershipBonus)}));
+    bonus:ownershipBonus(own.frac[name],CONF.ownershipBonus),
+    out:!!(results[name]&&results[name].eliminated)}));
   owned.sort((a,b)=>b.count-a.count || a.seed-b.seed);
   let ot='<table class="picks own"><thead><tr><th>Team</th><th>Seed</th><th>Picked by</th><th>Owned</th><th>Bonus</th></tr></thead><tbody>';
-  owned.forEach(o=>{ot+=`<tr><td class="pl">${o.name}</td><td>#${o.seed}</td><td>${o.count} / ${own.entrants}</td><td>${o.pct}%</td>`+
+  owned.forEach(o=>{ot+=`<tr${o.out?' class="outrow"':''}><td class="pl">${o.name}${o.out?' <span class="outtag">out</span>':''}</td><td>#${o.seed}</td><td>${o.count} / ${own.entrants}</td><td>${o.pct}%</td>`+
     `<td class="${o.bonus>1?'bn hot':'bn'}">×${o.bonus}</td></tr>`;});
   ot+='</tbody></table>';
   document.getElementById('ownTable').innerHTML=ot;
