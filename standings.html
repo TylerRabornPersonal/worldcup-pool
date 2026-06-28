@@ -252,16 +252,18 @@ Promise.all([
 function initSim(TEAMS, entries, CONF, GRP){
   const byName={}; TEAMS.forEach(t=>byName[t.name]=t);
   // Round of 32 matchups in official bracket order (W1..W16, top to bottom)
-  // official Round-of-32 bracket order (The Athletic), as a clean adjacent-pairs tree
+  // bracket order: LEFT half first (top->bottom), then RIGHT half. Clean adjacent-pairs tree.
+  // Left half (-> Final via left SF): France & Spain meet in the SEMIFINAL.
+  // Right half: England & Argentina meet in the other SEMIFINAL.
   const R32=[
-    ['Germany','Paraguay'],['France','Sweden'],             // -> R16 0 (Philadelphia)
-    ['South Africa','Canada'],['Netherlands','Morocco'],    // -> R16 1 (Houston)
-    ['Brazil','Japan'],["Cote d'Ivoire",'Norway'],          // -> R16 2 (New York)
-    ['Mexico','Ecuador'],['England','DR Congo'],            // -> R16 3 (Mexico City)
-    ['Portugal','Croatia'],['Spain','Austria'],             // -> R16 4 (Dallas)
-    ['USA','Bosnia & Herzegovina'],['Belgium','Senegal'],   // -> R16 5 (Seattle)
-    ['Argentina','Cape Verde'],['Australia','Egypt'],       // -> R16 6 (Atlanta)
-    ['Switzerland','Algeria'],['Colombia','Ghana']];        // -> R16 7 (Vancouver)
+    ['Germany','Paraguay'],['France','Sweden'],             // R16-0 Philadelphia  -> QF Boston
+    ['South Africa','Canada'],['Netherlands','Morocco'],    // R16-1 Houston        /
+    ['Portugal','Croatia'],['Spain','Austria'],             // R16-2 Dallas        -> QF LA
+    ['USA','Bosnia & Herzegovina'],['Belgium','Senegal'],   // R16-3 Seattle        /   (Boston+LA -> left SF)
+    ['Brazil','Japan'],["Cote d'Ivoire",'Norway'],          // R16-4 New York      -> QF Miami
+    ['Mexico','Ecuador'],['England','DR Congo'],            // R16-5 Mexico City    /
+    ['Argentina','Cape Verde'],['Australia','Egypt'],       // R16-6 Atlanta       -> QF Kansas City
+    ['Switzerland','Algeria'],['Colombia','Ghana']];        // R16-7 Vancouver      /   (Miami+KC -> right SF)
   const R16SRC=[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]];
   const QFSRC=[[0,1],[2,3],[4,5],[6,7]];
   const SFSRC=[[0,1],[2,3]];
