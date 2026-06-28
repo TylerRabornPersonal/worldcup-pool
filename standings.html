@@ -252,16 +252,16 @@ Promise.all([
 function initSim(TEAMS, entries, CONF, GRP){
   const byName={}; TEAMS.forEach(t=>byName[t.name]=t);
   // Round of 32 matchups in official bracket order (W1..W16, top to bottom)
-  // ordered as a clean adjacent-pairs bracket so the tree lines up visually
+  // official Round-of-32 bracket order (The Athletic), as a clean adjacent-pairs tree
   const R32=[
-    ['France','Sweden'],['Portugal','Croatia'],            // -> R16 0
-    ['Germany','Paraguay'],['South Africa','Canada'],       // -> R16 1
-    ['Mexico','Ecuador'],['England','DR Congo'],            // -> R16 2
-    ['Brazil','Japan'],["Cote d'Ivoire",'Norway'],          // -> R16 3
-    ['Netherlands','Morocco'],['Spain','Austria'],          // -> R16 4
-    ['USA','Bosnia & Herzegovina'],['Belgium','Senegal'],   // -> R16 5
-    ['Australia','Egypt'],['Colombia','Ghana'],             // -> R16 6
-    ['Argentina','Cape Verde'],['Switzerland','Algeria']];  // -> R16 7
+    ['Germany','Paraguay'],['France','Sweden'],             // -> R16 0 (Philadelphia)
+    ['South Africa','Canada'],['Netherlands','Morocco'],    // -> R16 1 (Houston)
+    ['Brazil','Japan'],["Cote d'Ivoire",'Norway'],          // -> R16 2 (New York)
+    ['Mexico','Ecuador'],['England','DR Congo'],            // -> R16 3 (Mexico City)
+    ['Portugal','Croatia'],['Spain','Austria'],             // -> R16 4 (Dallas)
+    ['USA','Bosnia & Herzegovina'],['Belgium','Senegal'],   // -> R16 5 (Seattle)
+    ['Argentina','Cape Verde'],['Australia','Egypt'],       // -> R16 6 (Atlanta)
+    ['Switzerland','Algeria'],['Colombia','Ghana']];        // -> R16 7 (Vancouver)
   const R16SRC=[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]];
   const QFSRC=[[0,1],[2,3],[4,5],[6,7]];
   const SFSRC=[[0,1],[2,3]];
