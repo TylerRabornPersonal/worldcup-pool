@@ -110,6 +110,17 @@
   .sim-slot{display:block;width:100%;text-align:left;font-size:.72rem;font-weight:600;padding:3px 7px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .sim-slot:hover:not(:disabled){border-color:var(--cyan)}
   .sim-slot.win{background:linear-gradient(90deg,#02efff,#00ff87);border-color:transparent;color:var(--purple);font-weight:800}
+  /* actual confirmed winner (locked, already counted in the table) */
+  .sim-slot.actual{background:linear-gradient(120deg,#37003c,#6a1773);border-color:transparent;color:#fff;font-weight:800;cursor:default}
+  .sim-slot.actual::after{content:" 🔒";font-size:.66rem;opacity:.9}
+  .sim-slot.actual:hover{border-color:transparent}
+  .sim-slot.lockloser{opacity:.42;cursor:default;text-decoration:line-through}
+  .sim-slot.lockloser:hover{border-color:var(--line)}
+  .sim-legend{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0 0;font-size:.76rem;color:var(--mut)}
+  .sim-legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:22px;height:12px;border-radius:4px;display:inline-block}
+  .sw.green{background:linear-gradient(90deg,#02efff,#00ff87)}
+  .sw.purple{background:linear-gradient(120deg,#37003c,#6a1773)}
   .sim-slot.tbd{color:#c4bdd2;cursor:default}
   .sim-board{order:2;flex:0 0 292px;position:sticky;top:10px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px}
   .sb-h{font-weight:800;color:var(--purple);margin-bottom:2px}
@@ -153,6 +164,7 @@
 
   <h2 class="sec">🔮 Knockout simulator</h2>
   <p class="secsub">Click a team to advance it through each round — the leaderboard updates live with projected scores and ranks. Group points are locked; this projects the knockouts only (no 3rd-place game).</p>
+  <div class="sim-legend"><span><i class="sw purple"></i> Confirmed winner 🔒 (already counted — can't be changed)</span><span><i class="sw green"></i> Your projected pick</span></div>
   <div class="sim-wrap">
     <div class="sim-board" id="simBoard"></div>
     <div class="sim-bracket" id="simBracket"></div>
@@ -268,6 +280,8 @@ function initSim(TEAMS, entries, CONF, GRP){
   const QFSRC=[[0,1],[2,3],[4,5],[6,7]];
   const SFSRC=[[0,1],[2,3]];
   const W={r32:Array(16).fill(null),r16:Array(8).fill(null),qf:Array(4).fill(null),sf:Array(2).fill(null),final:Array(1).fill(null)};
+  // LOCK[round][m]===true => that match already happened for real (from results.json); winner can't be changed
+  const LOCK={r32:Array(16).fill(false),r16:Array(8).fill(false),qf:Array(4).fill(false),sf:Array(2).fill(false),final:Array(1).fill(false)};
   const rounds=[
     {key:'r32',label:'Round of 32',n:16,part:m=>R32[m]},
     {key:'r16',label:'Round of 16',n:8, part:m=>[W.r32[R16SRC[m][0]],W.r32[R16SRC[m][1]]]},
@@ -280,6 +294,13 @@ function initSim(TEAMS, entries, CONF, GRP){
 
   function validate(){ for(let ri=1;ri<rounds.length;ri++){const r=rounds[ri];
     for(let m=0;m<r.n;m++){const p=r.part(m); if(W[r.key][m]&&p.indexOf(W[r.key][m])<0) W[r.key][m]=null;}}}
+  // Lock in matches that have actually been played (KO booleans already true in results.json).
+  // Runs round-by-round so each round's participants come from the prior round's set winners.
+  function applyActuals(){ rounds.forEach(r=>{ for(let m=0;m<r.n;m++){
+    const p=r.part(m); let winner=null;
+    p.forEach(t=>{ if(t && GRP[t] && GRP[t][r.key]) winner=t; });
+    if(winner){ W[r.key][m]=winner; LOCK[r.key][m]=true; } else { LOCK[r.key][m]=false; }
+  }}); }
   function koMap(){const ko={}; ['r32','r16','qf','sf','final'].forEach(rk=>W[rk].forEach(t=>{if(t){(ko[t]=ko[t]||{})[rk]=true;}})); return ko;}
   function recompute(){const ko=koMap(),res={};
     Object.keys(GRP).forEach(n=>{const g=GRP[n],k=ko[n]||{};
@@ -292,9 +313,16 @@ function initSim(TEAMS, entries, CONF, GRP){
       for(let m=0;m<r.n;m++){const p=r.part(m);
         const match=document.createElement('div'); match.className='sim-match';
         const pair=document.createElement('div'); pair.className='sim-pair';
+        const locked=LOCK[r.key][m];
         [0,1].forEach(s=>{const team=p[s]||null,win=team&&W[r.key][m]===team;
-          const b=document.createElement('button'); b.className='sim-slot'+(win?' win':'')+(team?'':' tbd');
-          b.textContent=team||'TBD'; if(!team)b.disabled=true; b.dataset.r=r.key; b.dataset.m=m; b.dataset.team=team||'';
+          let cls='sim-slot';
+          if(!team){cls+=' tbd';}
+          else if(win){cls+=locked?' actual':' win';}
+          else if(locked){cls+=' lockloser';}
+          const b=document.createElement('button'); b.className=cls;
+          b.textContent=team||'TBD'; if(!team)b.disabled=true;
+          if(locked&&team)b.title=win?'Confirmed result — already counted':'Eliminated in this round';
+          b.dataset.r=r.key; b.dataset.m=m; b.dataset.team=team||'';
           pair.appendChild(b);});
         match.appendChild(pair); mc.appendChild(match);}
       col.appendChild(mc); wrap.appendChild(col);});}
@@ -303,18 +331,18 @@ function initSim(TEAMS, entries, CONF, GRP){
       const ds=d>0.05?'<span class="up">▲'+d.toFixed(1)+'</span>':'';
       h+='<tr><td class="r">'+r.place+'</td><td class="n">'+r.player+'</td><td class="p">'+r.total.toFixed(1)+'</td><td class="d">'+ds+'</td></tr>';});
     document.getElementById('simBoard').innerHTML=h+'</table>';}
-  function refresh(){validate(); renderBracket(); renderBoard(recompute());}
-  function pick(rk,m,team){if(!team)return; W[rk][m]=(W[rk][m]===team?null:team); refresh();}
+  function refresh(){validate(); applyActuals(); renderBracket(); renderBoard(recompute());}
+  function pick(rk,m,team){if(!team)return; if(LOCK[rk][m])return; W[rk][m]=(W[rk][m]===team?null:team); refresh();}
 
   document.getElementById('simBracket').addEventListener('click',e=>{
     const b=e.target.closest('.sim-slot'); if(!b||b.disabled)return; pick(b.dataset.r,+b.dataset.m,b.dataset.team);});
   document.getElementById('simReset').addEventListener('click',()=>{
     Object.keys(W).forEach(k=>W[k].fill(null)); refresh();});
   document.getElementById('simFav').addEventListener('click',()=>{
-    rounds.forEach(r=>{for(let m=0;m<r.n;m++){const p=r.part(m).filter(Boolean);
+    rounds.forEach(r=>{for(let m=0;m<r.n;m++){if(LOCK[r.key][m])continue; const p=r.part(m).filter(Boolean);
       if(p.length===2) W[r.key][m]=(byName[p[0]].rank<=byName[p[1]].rank)?p[0]:p[1];}}); refresh();});
 
-  renderBracket(); renderBoard(baseRows);
+  applyActuals(); refresh();
 }
 </script>
 </body>
