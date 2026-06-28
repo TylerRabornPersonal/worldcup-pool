@@ -299,7 +299,7 @@ function initSim(TEAMS, entries, CONF, GRP){
   function renderBoard(rows){let h='<div class="sb-h">🏆 Projected standings</div><div class="sb-sub">live as you pick winners</div><table class="sb">';
     rows.forEach(r=>{const d=r.total-(baseMap[r.player]||0);
       const ds=d>0.05?'<span class="up">▲'+d.toFixed(1)+'</span>':'';
-      h+='<tr class="'+(r.player==='Tyler Raborn'?'me':'')+'"><td class="r">'+r.place+'</td><td class="n">'+r.player+'</td><td class="p">'+r.total.toFixed(1)+'</td><td class="d">'+ds+'</td></tr>';});
+      h+='<tr><td class="r">'+r.place+'</td><td class="n">'+r.player+'</td><td class="p">'+r.total.toFixed(1)+'</td><td class="d">'+ds+'</td></tr>';});
     document.getElementById('simBoard').innerHTML=h+'</table>';}
   function refresh(){validate(); renderBracket(); renderBoard(recompute());}
   function pick(rk,m,team){if(!team)return; W[rk][m]=(W[rk][m]===team?null:team); refresh();}
