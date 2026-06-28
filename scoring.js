@@ -86,6 +86,7 @@ function computeStandings(entries, teams, results, config) {
         bonus,
         basePoints: base,
         points: Math.round(base * bonus * 100) / 100,
+        eliminated: !!(results[n] && results[n].eliminated),
         breakdown: t ? teamBreakdown(t, results[n]) : null
       };
     });
