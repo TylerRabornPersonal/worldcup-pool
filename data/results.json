@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-30",
+  "lastUpdated": "2026-07-01",
   "teams": {
     "Mexico":                { "groupWins": 3, "groupTies": 0, "r32": true,  "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
     "South Africa":          { "groupWins": 1, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": true },
@@ -43,9 +43,9 @@
     "Jordan":                { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": true },
     "Colombia":              { "groupWins": 2, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
     "Portugal":              { "groupWins": 1, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
-    "DR Congo":              { "groupWins": 1, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
+    "DR Congo":              { "groupWins": 1, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": true  },
     "Uzbekistan":            { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": true },
-    "England":               { "groupWins": 2, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
+    "England":               { "groupWins": 2, "groupTies": 1, "r32": true,  "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
     "Croatia":               { "groupWins": 2, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
     "Ghana":                 { "groupWins": 1, "groupTies": 1, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": false },
     "Panama":                { "groupWins": 0, "groupTies": 0, "r32": false, "r16": false, "qf": false, "sf": false, "final": false, "eliminated": true }
