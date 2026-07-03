@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-02",
+  "lastUpdated": "2026-07-03",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -44,7 +44,7 @@
     "Switzerland": {
       "groupWins": 2,
       "groupTies": 1,
-      "r32": false,
+      "r32": true,
       "r16": false,
       "qf": false,
       "sf": false,
@@ -389,7 +389,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Jordan": {
       "groupWins": 0,
@@ -482,5 +482,5 @@
       "eliminated": true
     }
   },
-  "generatedAt": "2026-07-03T01:23:02Z"
+  "generatedAt": "2026-07-03T12:11:26Z"
 }
