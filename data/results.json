@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-03",
+  "lastUpdated": "2026-07-04",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -139,7 +139,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Paraguay": {
       "groupWins": 1,
@@ -254,7 +254,7 @@
     "Egypt": {
       "groupWins": 1,
       "groupTies": 2,
-      "r32": false,
+      "r32": true,
       "r16": false,
       "qf": false,
       "sf": false,
@@ -299,7 +299,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Uruguay": {
       "groupWins": 0,
@@ -364,7 +364,7 @@
     "Argentina": {
       "groupWins": 3,
       "groupTies": 0,
-      "r32": false,
+      "r32": true,
       "r16": false,
       "qf": false,
       "sf": false,
@@ -404,7 +404,7 @@
     "Colombia": {
       "groupWins": 2,
       "groupTies": 1,
-      "r32": false,
+      "r32": true,
       "r16": false,
       "qf": false,
       "sf": false,
@@ -469,7 +469,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Panama": {
       "groupWins": 0,
@@ -481,6 +481,5 @@
       "final": false,
       "eliminated": true
     }
-  },
-  "generatedAt": "2026-07-03T12:11:26Z"
+  }
 }
