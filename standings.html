@@ -178,9 +178,9 @@
 <script>
 const CARET='<svg class="caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>';
 Promise.all([
-  fetch('data/teams.json').then(r=>r.json()),
-  fetch('data/picks.json').then(r=>r.json()),
-  fetch('data/results.json').then(r=>r.json())
+  fetch('data/teams.json?ts='+Date.now()).then(r=>r.json()),
+  fetch('data/picks.json?ts='+Date.now()).then(r=>r.json()),
+  fetch('data/results.json?ts='+Date.now()).then(r=>r.json())
 ]).then(([td,pd,rd])=>{
   const CONF=td.config, TEAMS=td.teams;
   const entries=(pd.entries||[]).filter(e=>!/^EXAMPLE/i.test(e.player||''));
