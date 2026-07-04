@@ -59,7 +59,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Bosnia & Herzegovina": {
       "groupWins": 1,
@@ -95,7 +95,7 @@
       "groupWins": 2,
       "groupTies": 1,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
