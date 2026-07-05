@@ -403,7 +403,7 @@
     },
     "Colombia": {
       "groupWins": 2,
-      "groupTies": 0,
+      "groupTies": 1,
       "r32": true,
       "r16": false,
       "qf": false,
@@ -413,7 +413,7 @@
     },
     "Portugal": {
       "groupWins": 1,
-      "groupTies": 1,
+      "groupTies": 2,
       "r32": true,
       "r16": false,
       "qf": false,
