@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-04",
+  "lastUpdated": "2026-07-05",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -149,7 +149,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Turkey": {
       "groupWins": 1,
@@ -325,7 +325,7 @@
       "groupWins": 3,
       "groupTies": 0,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
@@ -403,7 +403,7 @@
     },
     "Colombia": {
       "groupWins": 2,
-      "groupTies": 1,
+      "groupTies": 0,
       "r32": true,
       "r16": false,
       "qf": false,
@@ -413,7 +413,7 @@
     },
     "Portugal": {
       "groupWins": 1,
-      "groupTies": 2,
+      "groupTies": 1,
       "r32": true,
       "r16": false,
       "qf": false,
