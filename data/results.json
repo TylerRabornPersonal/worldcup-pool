@@ -9,7 +9,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "South Africa": {
       "groupWins": 1,
@@ -89,7 +89,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Morocco": {
       "groupWins": 2,
@@ -335,7 +335,7 @@
       "groupWins": 2,
       "groupTies": 0,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
@@ -445,7 +445,7 @@
       "groupWins": 2,
       "groupTies": 1,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
