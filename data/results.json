@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-06",
+  "lastUpdated": "2026-07-07",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -129,7 +129,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Australia": {
       "groupWins": 1,
@@ -245,7 +245,7 @@
       "groupWins": 1,
       "groupTies": 2,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
