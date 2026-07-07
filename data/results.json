@@ -259,7 +259,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Iran": {
       "groupWins": 0,
@@ -365,7 +365,7 @@
       "groupWins": 3,
       "groupTies": 0,
       "r32": true,
-      "r16": false,
+      "r16": true,
       "qf": false,
       "sf": false,
       "final": false,
