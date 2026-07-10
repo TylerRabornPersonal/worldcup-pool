@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-09",
+  "lastUpdated": "2026-07-10",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -249,7 +249,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Egypt": {
       "groupWins": 1,
@@ -286,7 +286,7 @@
       "groupTies": 1,
       "r32": true,
       "r16": true,
-      "qf": false,
+      "qf": true,
       "sf": false,
       "final": false,
       "eliminated": false
