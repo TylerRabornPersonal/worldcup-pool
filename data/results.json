@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-07",
+  "lastUpdated": "2026-07-09",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -99,7 +99,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Scotland": {
       "groupWins": 1,
@@ -326,7 +326,7 @@
       "groupTies": 0,
       "r32": true,
       "r16": true,
-      "qf": false,
+      "qf": true,
       "sf": false,
       "final": false,
       "eliminated": false
