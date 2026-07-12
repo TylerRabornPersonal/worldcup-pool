@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-10",
+  "lastUpdated": "2026-07-11",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -49,7 +49,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Canada": {
       "groupWins": 1,
@@ -339,7 +339,7 @@
       "qf": false,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Senegal": {
       "groupWins": 1,
@@ -366,7 +366,7 @@
       "groupTies": 0,
       "r32": true,
       "r16": true,
-      "qf": false,
+      "qf": true,
       "sf": false,
       "final": false,
       "eliminated": false
@@ -446,7 +446,7 @@
       "groupTies": 1,
       "r32": true,
       "r16": true,
-      "qf": false,
+      "qf": true,
       "sf": false,
       "final": false,
       "eliminated": false
