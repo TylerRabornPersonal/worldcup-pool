@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-11",
+  "lastUpdated": "2026-07-14",
   "teams": {
     "Mexico": {
       "groupWins": 3,
@@ -287,7 +287,7 @@
       "r32": true,
       "r16": true,
       "qf": true,
-      "sf": false,
+      "sf": true,
       "final": false,
       "eliminated": false
     },
@@ -329,7 +329,7 @@
       "qf": true,
       "sf": false,
       "final": false,
-      "eliminated": false
+      "eliminated": true
     },
     "Norway": {
       "groupWins": 2,
