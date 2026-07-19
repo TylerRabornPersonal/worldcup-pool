@@ -138,6 +138,36 @@
   .simbtn:hover{background:#e7e0f2}
   @media(max-width:820px){.sim-wrap{flex-direction:column}.sim-board{order:0;position:sticky;top:0;width:100%;flex:none;z-index:5}.sim-bracket{height:820px}}
   code{background:#f0ecf6;padding:2px 6px;border-radius:6px}
+  /* champions podium */
+  .podium-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+    padding:20px 16px 0;margin:0 0 12px;position:relative;overflow:hidden}
+  .pod-title{text-align:center;font-weight:800;font-size:1.3rem;color:var(--purple);margin:0}
+  .pod-sub{text-align:center;color:var(--mut);font-size:.86rem;margin:2px 0 16px}
+  .pod-row{display:flex;align-items:flex-end;justify-content:center;gap:14px}
+  .pod-col{text-align:center;width:190px;min-width:0}
+  .pod-nm{font-weight:800;font-size:.98rem;margin:4px 0 0;color:var(--purple);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pod-pts{color:var(--mut);font-size:.8rem;margin:0 0 8px}
+  .pod-pts b{color:var(--pink)}
+  .pod-block{border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.6rem}
+  .pb1{height:120px;background:linear-gradient(135deg,#ffd700,#ffb300);color:#5a3b00}
+  .pb2{height:84px;background:linear-gradient(135deg,#d8d8e0,#b9b9c6);color:#3a3a45}
+  .pb3{height:58px;background:linear-gradient(135deg,#e6a673,#c97f43);color:#3d2200}
+  .stick{display:block;margin:0 auto}
+  .podjump{animation:podjump 1.4s ease-in-out infinite}
+  .armL{transform-origin:30px 34px;animation:podwave 1.2s ease-in-out infinite}
+  .armR{transform-origin:30px 34px;animation:podwave2 1.2s ease-in-out infinite}
+  @keyframes podjump{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes podwave{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(50deg)}}
+  @keyframes podwave2{0%,100%{transform:rotate(200deg)}50%{transform:rotate(140deg)}}
+  .confp{position:absolute;top:-14px;width:8px;height:12px;border-radius:2px;animation:confall linear infinite}
+  @keyframes confall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(480px) rotate(540deg);opacity:0}}
+  .pod-loser{display:flex;align-items:center;gap:16px;border-top:1px dashed var(--line);margin-top:18px;padding:12px 6px 14px}
+  .pod-loser .sadfig{transform-origin:30px 60px;animation:podslump 3s ease-in-out infinite}
+  @keyframes podslump{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg)}}
+  .pl-k{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--pink)}
+  .pl-n{font-weight:800;color:var(--purple)}
+  .pl-s{color:var(--mut);font-size:.85rem}
+  @media(max-width:620px){.pod-col{width:31%}.pod-nm{font-size:.84rem}}
 </style>
 </head>
 <body>
@@ -153,6 +183,7 @@
 <div class="wrap">
   <div class="tiles" id="tiles"></div>
   <div class="paystrip" id="paystrip"></div>
+  <div id="podium"></div>
   <div id="board" class="load">Loading standings…</div>
 
   <h2 class="sec">📋 All picks at a glance</h2>
@@ -206,6 +237,49 @@ Promise.all([
      <div class="tile t4"><div class="v" style="font-size:1.15rem">${leader}</div><div class="k">Current leader</div></div>`;
   document.getElementById('paystrip').innerHTML=
     `<b>Payouts</b> &nbsp;${payChips} &nbsp;<span class="ps-note">(3rd &amp; last get their $${fee} back; 1st/2nd split the rest 75/25)</span>`;
+
+  // ---- champions podium (renders only once a champion exists in results.json) ----
+  const champion=Object.keys(results).find(k=>results[k].final);
+  if(champion&&rows.length>=4){
+    const stick=(c,delay,crown)=>
+      `<svg class="stick podjump" style="animation-delay:${delay}" width="${crown?66:60}" height="${crown?80:74}" viewBox="0 0 60 74" aria-hidden="true">`+
+      `<circle cx="30" cy="18" r="9" fill="none" stroke="${c}" stroke-width="3"/>`+
+      (crown?`<path d="M22 9 L24 3 L28 8 L30 2 L32 8 L36 3 L38 9" fill="none" stroke="${c}" stroke-width="2.5" stroke-linejoin="round"/>`:'')+
+      `<line x1="30" y1="27" x2="30" y2="50" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`+
+      `<g class="armL"><line x1="30" y1="36" x2="46" y2="26" stroke="${c}" stroke-width="3" stroke-linecap="round"/></g>`+
+      `<g class="armR"><line x1="30" y1="36" x2="46" y2="26" stroke="${c}" stroke-width="3" stroke-linecap="round"/></g>`+
+      `<line x1="30" y1="50" x2="20" y2="70" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`+
+      `<line x1="30" y1="50" x2="40" y2="70" stroke="${c}" stroke-width="3" stroke-linecap="round"/></svg>`;
+    const col=(r,cls,blockLabel,fig,pay)=>
+      `<div class="pod-col">${fig}<div class="pod-nm">${r.player}</div>`+
+      `<div class="pod-pts">${r.total.toFixed(1)} pts · <b>${pay}</b></div>`+
+      `<div class="pod-block ${cls}">${blockLabel}</div></div>`;
+    const last=rows[rows.length-1];
+    const confetti=['#02efff','#00ff87','#e90052','#ffd700','#6d4bd6','#02efff','#00ff87','#e90052','#ffd700']
+      .map((c,i)=>`<div class="confp" style="left:${5+i*11}%;background:${c};animation-duration:${(3+(i%4)*0.45).toFixed(2)}s;animation-delay:${(i*0.37)%2}s"></div>`).join('');
+    document.getElementById('podium').innerHTML=
+      `<div class="podium-card">${confetti}`+
+      `<h2 class="pod-title">🏆 ${champion} campeón — pool is settled!</h2>`+
+      `<div class="pod-sub">Final standings · congrats to the podium</div>`+
+      `<div class="pod-row">`+
+      col(rows[1],'pb2','2',stick('#8a8a97','.2s',false),`$${(slots[1]||0).toFixed(0)}`)+
+      col(rows[0],'pb1','1',stick('#c69200','0s',true),`$${(slots[0]||0).toFixed(0)}`)+
+      col(rows[2],'pb3','3',stick('#b0713a','.5s',false),`$${fee} back`)+
+      `</div>`+
+      `<div class="pod-loser">`+
+      `<svg class="sadfig" width="50" height="70" viewBox="0 0 60 80" aria-hidden="true">`+
+      `<circle cx="30" cy="20" r="9" fill="none" stroke="#e90052" stroke-width="3"/>`+
+      `<path d="M25 24 Q30 21 35 24" fill="none" stroke="#e90052" stroke-width="2" stroke-linecap="round"/>`+
+      `<line x1="30" y1="29" x2="30" y2="52" stroke="#e90052" stroke-width="3" stroke-linecap="round"/>`+
+      `<line x1="30" y1="38" x2="18" y2="52" stroke="#e90052" stroke-width="3" stroke-linecap="round"/>`+
+      `<line x1="30" y1="38" x2="42" y2="52" stroke="#e90052" stroke-width="3" stroke-linecap="round"/>`+
+      `<rect x="38" y="48" width="14" height="8" rx="1.5" fill="#00ff87" stroke="#0a7a45" stroke-width="1.5"/>`+
+      `<line x1="30" y1="52" x2="22" y2="72" stroke="#e90052" stroke-width="3" stroke-linecap="round"/>`+
+      `<line x1="30" y1="52" x2="38" y2="72" stroke="#e90052" stroke-width="3" stroke-linecap="round"/></svg>`+
+      `<div><div class="pl-k">The biggest loser award</div>`+
+      `<div class="pl-n">${last.player} — ${last.total.toFixed(1)} pts, dead last</div>`+
+      `<div class="pl-s">Consolation prize: the $${fee} entry fee back.</div></div></div></div>`;
+  }
 
   const board=document.getElementById('board'); board.className=''; board.innerHTML='';
   if(!rows.length){board.innerHTML='<div class="load">No entries yet — they appear here once picks are submitted.</div>';}
