@@ -193,6 +193,10 @@
   <p class="secsub">Locked when picks closed. The fewer entrants on a team, the bigger its season-long multiplier.</p>
   <div id="ownTable" class="tablewrap"></div>
 
+  <h2 class="sec">🧮 Final team scores</h2>
+  <p class="secsub">Every team's points: base points × seed multiplier × ownership bonus. Unpicked teams are shown with the ×2 bonus they would have carried (assuming a single owner).</p>
+  <div id="teamScores" class="tablewrap"></div>
+
   <h2 class="sec">🔮 Knockout simulator</h2>
   <p class="secsub">Click a team to advance it through each round — the leaderboard updates live with projected scores and ranks. Group points are locked; this projects the knockouts only (no 3rd-place game).</p>
   <div class="sim-legend"><span><i class="sw purple"></i> Confirmed winner 🔒 (already counted — can't be changed)</span><span><i class="sw green"></i> Your projected pick</span></div>
@@ -328,6 +332,36 @@ Promise.all([
     `<td class="${o.bonus>1?'bn hot':'bn'}">×${o.bonus}</td></tr>`;});
   ot+='</tbody></table>';
   document.getElementById('ownTable').innerHTML=ot;
+
+  // ---- TABLE 3: final team scores (all 48 teams, ranked) ----
+  const BV=CONF.baseValues;
+  const R32SET=new Set(['Germany','Paraguay','France','Sweden','South Africa','Canada','Netherlands','Morocco',
+    'Portugal','Croatia','Spain','Austria','USA','Bosnia & Herzegovina','Belgium','Senegal','Brazil','Japan',
+    "Cote d'Ivoire",'Norway','Mexico','Ecuador','England','DR Congo','Argentina','Cape Verde','Australia',
+    'Egypt','Switzerland','Algeria','Colombia','Ghana']);
+  const trows=TEAMS.map(t=>{
+    const g=results[t.name]||{};
+    const base=(g.groupWins||0)*BV.gw+(g.groupTies||0)*BV.gt+(g.r32?BV.r32:0)+
+      (g.r16?BV.r16:0)+(g.qf?BV.qf:0)+(g.sf?BV.sf:0)+(g.final?BV.final:0);
+    const cnt=own.count[t.name]||0;
+    const bonus=ownershipBonus((cnt||1)/own.entrants,CONF.ownershipBonus);
+    const run=g.final?'🏆 Champion':g.sf?'Runner-up':g.qf?'Semifinals':g.r16?'Quarterfinals':g.r32?'Round of 16':
+      R32SET.has(t.name)?'Round of 32':'Group stage';
+    return {name:t.name,seed:t.rank,mult:t.seedMult,base,bonus,cnt,run,
+      rec:(g.groupWins||0)+'W-'+(g.groupTies||0)+'T',total:base*t.seedMult*bonus};
+  });
+  trows.sort((a,b)=>b.total-a.total||a.name.localeCompare(b.name));
+  let tt='<table class="picks own"><thead><tr><th>#</th><th>Team</th><th>Finish</th><th>Group</th>'+
+    '<th>Calculation</th><th>Total</th><th>Picked by</th></tr></thead><tbody>';
+  trows.forEach((r,i)=>{
+    tt+=`<tr><td class="rk">${i+1}</td><td class="pl">${r.name} <span class="seed">#${r.seed}</span></td>`+
+      `<td>${r.run}</td><td>${r.rec}</td>`+
+      `<td class="t">${r.base.toFixed(1)} × ${r.mult} × ${r.bonus}${r.cnt?'':' <span class="seed">(×2 assumed)</span>'}</td>`+
+      `<td class="tot2">${r.total.toFixed(2)}</td>`+
+      `<td>${r.cnt?r.cnt+' / '+own.entrants:'—'}</td></tr>`;
+  });
+  tt+='</tbody></table>';
+  document.getElementById('teamScores').innerHTML=tt;
 
   document.getElementById('meta').innerHTML='Results last updated: '+(rd.lastUpdated||'—')+' · tap any ranked row for team-by-team stage points · points fill in as games finish';
 
